@@ -1,0 +1,9 @@
+[build]
+# RP2350 Cortex-M33 cores with hardware float.
+target = "thumbv8m.main-none-eabihf"
+
+[target.thumbv8m.main-none-eabihf]
+# `cargo run --release` converts the ELF to a UF2 for BOOTSEL drag-and-drop.
+# With an SWD debug probe use: runner = "probe-rs run --chip RP2350"
+runner = "python3 tools/elf2uf2.py"
+rustflags = ["-C", "link-arg=-Tlink.x"]
