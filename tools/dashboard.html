@@ -1,0 +1,1049 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Battery Monitor</title>
+<style>
+  :root {
+    --surface-0: #f3f2ef;
+    --surface-1: #fcfcfb;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --grid: #e4e3df;
+    --border: #e4e3df;
+    --temp: #eb6834;
+    --volts: #2a78d6;
+    --amps: #1baf7a;
+    --cells: #2a78d6;
+    --good: #0ca30c;
+    --warning: #fab219;
+    --critical: #d03b3b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --surface-0: #111110;
+      --surface-1: #1a1a19;
+      --text-primary: #f0efec;
+      --text-secondary: #c3c2b7;
+      --grid: #383835;
+      --border: #383835;
+      --temp: #d95926;
+      --volts: #3987e5;
+      --amps: #199e70;
+      --cells: #3987e5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 32px 40px;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    font: 15px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .banner {
+    position: sticky; top: 0; z-index: 5; margin: -24px -32px 20px; padding: 12px 32px;
+    background: var(--surface-1); border-bottom: 3px solid var(--critical);
+    box-shadow: 0 4px 16px rgb(0 0 0 / .12); font-size: 16px;
+  }
+  .banner[hidden] { display: none; }
+  .banner b::before { content: "⚠ "; color: var(--critical); }
+  .banner .detail { color: var(--text-secondary); font-size: 14px; margin-left: 8px; }
+  /* While the gauge isn't answering, the values shown are the last good ones: dim them. */
+  body.stale .tiles .value, body.stale .chart svg, body.stale .cellchart svg,
+  body.stale .group td.val, .group td.val.stale, .api .raw.stale { opacity: .55; }
+  .stale-note { color: var(--text-secondary); font-size: 12px; font-style: italic; margin-top: 2px; }
+  .stale-note::before { content: "⚠ "; color: var(--critical); font-style: normal; }
+  header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+  h1 { font-size: 28px; margin: 0; }
+  h2 { font-size: 16px; margin: 0 0 8px; }
+  .status { color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-secondary); }
+  .dot.live { background: var(--good); }
+  .dot.warn { background: var(--warning); }
+  .spacer { flex: 1; }
+  .ranges { display: flex; gap: 4px; }
+  .ranges button, .toggle {
+    font: inherit; padding: 4px 12px; border-radius: 6px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--surface-1); color: var(--text-primary);
+  }
+  .ranges button[aria-pressed="true"] { background: var(--text-primary); color: var(--surface-1); }
+
+  .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
+  .tile .label { color: var(--text-secondary); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .tile .swatch { width: 12px; height: 3px; border-radius: 2px; }
+  .tile .value { font-size: 40px; font-weight: 700; font-variant-numeric: tabular-nums; margin: 4px 0 2px; }
+  .tile .sub { color: var(--text-secondary); font-size: 14px; min-height: 20px; }
+  .meter { height: 8px; border-radius: 4px; background: var(--grid); overflow: hidden; margin-top: 6px; }
+  .meter > div { height: 100%; width: 0; border-radius: 4px; background: var(--good); transition: width .3s; }
+
+  .layout { display: grid; grid-template-columns: 3fr 1fr; gap: 16px; }
+  .charts { display: grid; gap: 16px; }
+  .chart { position: relative; }
+  .chart svg { display: block; width: 100%; height: 170px; overflow: visible; touch-action: none; }
+  .cellchart svg { display: block; width: 100%; height: 220px; }
+  .axis text { fill: var(--text-secondary); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .gridline { stroke: var(--grid); stroke-width: 1; }
+  .zero { stroke: var(--text-secondary); stroke-dasharray: 4 4; opacity: .6; }
+  .crosshair { stroke: var(--text-secondary); stroke-width: 1; }
+  .empty { fill: var(--text-secondary); font-size: 14px; }
+
+  .tooltip {
+    position: absolute; pointer-events: none; z-index: 2; display: none;
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 12px; font-size: 13px; box-shadow: 0 4px 16px rgb(0 0 0 / .12); white-space: nowrap;
+  }
+  .tooltip .row { display: flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
+  .tooltip .row b { margin-left: auto; padding-left: 16px; }
+  .tooltip .time { color: var(--text-secondary); margin-bottom: 4px; }
+
+  .side { display: grid; gap: 16px; align-content: start; }
+  .note { color: var(--text-secondary); font-size: 13px; margin: 4px 0 0; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 14px; }
+  th, td { text-align: right; padding: 4px 8px; border-bottom: 1px solid var(--grid); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-secondary); font-weight: 500; }
+  #table-card { margin-top: 16px; }
+  .all-data { margin-top: 16px; }
+  .all-data-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+  .all-data-head h2 { margin: 0; font-size: 20px; }
+  .all-data-head input {
+    font: inherit; padding: 4px 10px; border-radius: 6px; width: 220px;
+    border: 1px solid var(--border); background: var(--surface-0); color: var(--text-primary);
+  }
+  .groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 16px; align-items: start; }
+  .group h3 { font-size: 15px; margin: 0 0 6px; }
+  .group td { vertical-align: top; }
+  .group td.reg { color: var(--text-secondary); font: 12px ui-monospace, monospace; white-space: nowrap; }
+  .group td.val { overflow-wrap: anywhere; }
+  .group td.val.failed { color: var(--text-secondary); font-style: italic; }
+  .group .hex { font: 13px ui-monospace, monospace; }
+  .flags { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; margin-top: 3px; }
+  .flag {
+    font: 11px ui-monospace, monospace; padding: 1px 6px; border-radius: 4px;
+    border: 1px solid var(--border); background: var(--surface-0); color: var(--text-primary);
+  }
+  .flag.alarm { border-color: var(--critical); }
+  .flag.alarm::before { content: "⚠ "; color: var(--critical); }
+  .flags .none { color: var(--text-secondary); font-size: 12px; }
+
+  .api { margin-top: 16px; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tabs button[aria-selected="true"] { background: var(--text-primary); color: var(--surface-1); }
+  .api table { table-layout: fixed; }
+  .api th, .api td { text-align: left; vertical-align: top; }
+  .api col.c-name { width: 24%; } .api col.c-addr { width: 11%; } .api col.c-val { width: 47%; } .api col.c-act { width: 18%; }
+  .api .name { font: 13px ui-monospace, monospace; overflow-wrap: anywhere; }
+  .api .doc { color: var(--text-secondary); font-size: 12px; margin-top: 2px; }
+  .api .meta { color: var(--text-secondary); font: 12px ui-monospace, monospace; }
+  .api .raw { font: 13px ui-monospace, monospace; overflow-wrap: anywhere; }
+  .api .raw.failed, .api .raw.error { color: var(--text-secondary); font-style: italic; font-family: inherit; }
+  .api .raw.error::before { content: "⚠ "; color: var(--critical); font-style: normal; }
+  .api .flags { justify-content: flex-start; }
+  .api .actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .api .actions button { font-size: 13px; padding: 2px 10px; }
+  .api .actions label { font-size: 13px; color: var(--text-secondary); display: flex; gap: 4px; align-items: center; }
+  .api input.arg {
+    font: 12px ui-monospace, monospace; padding: 3px 6px; border-radius: 4px; width: 100%; margin-top: 4px;
+    border: 1px solid var(--border); background: var(--surface-0); color: var(--text-primary);
+  }
+  .api .danger { border-color: var(--critical); }
+  #table-card[hidden] { display: none; }
+
+  @media (max-width: 1000px) {
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+    .layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="banner" id="banner" role="alert" hidden><b id="banner-title"></b><span class="detail" id="banner-detail"></span></div>
+<header>
+  <h1>Live Battery Monitor</h1>
+  <div class="status"><span class="dot" id="dot"></span><span id="status">Connecting to the dashboard server...</span></div>
+  <div class="spacer"></div>
+  <div class="ranges" role="group" aria-label="Time range">
+    <button data-range="60">1 min</button>
+    <button data-range="180" aria-pressed="true">3 min</button>
+    <button data-range="600">10 min</button>
+  </div>
+  <button class="toggle" id="toggle-poll" aria-pressed="false">Pause polling</button>
+  <button class="toggle" id="toggle-table" aria-expanded="false">Show table</button>
+</header>
+
+<section class="tiles">
+  <div class="card tile">
+    <div class="label"><span class="swatch" style="background: var(--temp)"></span>Temperature</div>
+    <div class="value" id="v-temp">--</div><div class="sub" id="s-temp"></div>
+  </div>
+  <div class="card tile">
+    <div class="label"><span class="swatch" style="background: var(--volts)"></span>Pack voltage</div>
+    <div class="value" id="v-volts">--</div><div class="sub" id="s-volts"></div>
+  </div>
+  <div class="card tile">
+    <div class="label"><span class="swatch" style="background: var(--amps)"></span>Current</div>
+    <div class="value" id="v-amps">--</div><div class="sub" id="s-amps"></div>
+  </div>
+  <div class="card tile">
+    <div class="label">State of charge</div>
+    <div class="value" id="v-soc">--</div>
+    <div class="meter" role="meter" aria-label="State of charge" aria-valuemin="0" aria-valuemax="100" id="meter"><div></div></div>
+  </div>
+</section>
+
+<section class="layout">
+  <div class="charts">
+    <div class="card chart" data-key="temp"><h2>Temperature (°C)</h2><svg></svg><div class="tooltip"></div></div>
+    <div class="card chart" data-key="volts"><h2>Pack voltage (V)</h2><svg></svg><div class="tooltip"></div></div>
+    <div class="card chart" data-key="amps"><h2>Current (A)</h2><svg></svg><div class="tooltip"></div></div>
+  </div>
+  <div class="side">
+    <div class="card cellchart">
+      <h2>Cell voltages</h2>
+      <svg id="cells"></svg>
+      <div class="tooltip" id="cell-tip"></div>
+      <p class="note" id="cell-note">Bars show each cell's offset from the pack average, in mV.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card all-data">
+  <div class="all-data-head">
+    <h2>All gauge data</h2>
+    <span class="note" id="all-updated">Waiting for the first reply...</span>
+    <div class="spacer"></div>
+    <input id="filter" type="search" placeholder="Filter fields" aria-label="Filter fields">
+  </div>
+  <div class="groups" id="groups"></div>
+</section>
+
+<section class="card api">
+  <div class="all-data-head">
+    <h2>Driver API</h2>
+    <span class="note" id="api-note">Every register, MAC command, buffer and function of the bq41z50 driver.</span>
+    <div class="spacer"></div>
+    <button class="toggle" id="read-all">Read all</button>
+    <input id="api-filter" type="search" placeholder="Filter by name or address" aria-label="Filter driver API">
+  </div>
+  <div class="tabs" role="tablist" id="api-tabs"></div>
+  <p class="note" id="api-tab-note"></p>
+  <table>
+    <colgroup><col class="c-name"><col class="c-addr"><col class="c-val"><col class="c-act"></colgroup>
+    <thead><tr><th>Name</th><th>Address</th><th>Value</th><th></th></tr></thead>
+    <tbody id="api-rows"></tbody>
+  </table>
+</section>
+
+<section class="card" id="table-card" hidden>
+  <h2>Recent readings</h2>
+  <table>
+    <thead><tr><th>Time</th><th>Temp (°C)</th><th>Voltage (V)</th><th>Current (A)</th><th>SoC (%)</th><th>Cells (V)</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</section>
+
+<script>
+const SERIES = {
+  temp:  { label: "Temperature", unit: "°C", digits: 1, minSpan: 2,   color: "--temp" },
+  volts: { label: "Voltage",     unit: "V",  digits: 2, minSpan: 0.2, color: "--volts" },
+  amps:  { label: "Current",     unit: "A",  digits: 2, minSpan: 0.2, color: "--amps", zero: true },
+};
+const MAX_HISTORY_S = 600;
+const M = { top: 8, right: 16, bottom: 24, left: 48 };
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+let data = [];
+let range = 180;
+let hoverT = null;
+let mode = "live";
+
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const fmt = (v, d) => v.toFixed(d);
+const clock = t => new Date(t * 1000).toLocaleTimeString();
+
+function el(tag, attrs = {}, parent) {
+  const node = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+  if (parent) parent.appendChild(node);
+  return node;
+}
+
+function niceTicks(lo, hi, count) {
+  const raw = (hi - lo) / count;
+  const mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 2.5, 5, 10].map(s => s * mag).find(s => s >= raw);
+  const ticks = [];
+  for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) ticks.push(+v.toFixed(6));
+  return ticks;
+}
+
+function yDomain(values, minSpan, includeZero) {
+  if (includeZero) values = values.concat([0]);
+  let lo = Math.min(...values), hi = Math.max(...values);
+  const pad = Math.max((hi - lo) * 0.15, 0);
+  lo -= pad; hi += pad;
+  if (hi - lo < minSpan) { const mid = (lo + hi) / 2; lo = mid - minSpan / 2; hi = mid + minSpan / 2; }
+  return [lo, hi];
+}
+
+function nearest(t) {
+  let lo = 0, hi = data.length - 1;
+  while (hi - lo > 1) { const mid = (lo + hi) >> 1; (data[mid].t < t ? lo = mid : hi = mid); }
+  return Math.abs(data[lo].t - t) <= Math.abs(data[hi].t - t) ? data[lo] : data[hi];
+}
+
+function renderLine(card) {
+  const key = card.dataset.key, s = SERIES[key], svg = card.querySelector("svg");
+  const W = svg.clientWidth, H = svg.clientHeight;
+  svg.replaceChildren();
+  const now = data.length ? data[data.length - 1].t : Date.now() / 1000;
+  const t0 = now - range;
+  const visible = data.filter(d => d.t >= t0);
+  if (!visible.length) {
+    el("text", { x: W / 2, y: H / 2, "text-anchor": "middle", class: "empty" }, svg).textContent = "Waiting for data...";
+    return;
+  }
+  const [lo, hi] = yDomain(visible.map(d => d[key]), s.minSpan, s.zero);
+  const x = t => M.left + (t - t0) / range * (W - M.left - M.right);
+  const y = v => H - M.bottom - (v - lo) / (hi - lo) * (H - M.top - M.bottom);
+  card._scale = { x, t0, W };
+
+  const axis = el("g", { class: "axis" }, svg);
+  for (const v of niceTicks(lo, hi, 4)) {
+    el("line", { x1: M.left, x2: W - M.right, y1: y(v), y2: y(v), class: "gridline" }, axis);
+    el("text", { x: M.left - 8, y: y(v) + 4, "text-anchor": "end" }, axis).textContent = fmt(v, s.digits);
+  }
+  const step = range <= 60 ? 15 : range <= 180 ? 30 : 120;
+  for (let ago = 0; ago <= range; ago += step) {
+    const label = ago === 0 ? "now" : ago < 60 || ago % 60 ? `−${ago}s` : `−${ago / 60} min`;
+    el("text", { x: x(now - ago), y: H - 4, "text-anchor": ago === range ? "start" : "middle" }, axis).textContent = label;
+  }
+  if (s.zero && lo < 0 && hi > 0) el("line", { x1: M.left, x2: W - M.right, y1: y(0), y2: y(0), class: "zero" }, svg);
+
+  const color = css(s.color);
+  const path = visible.map((d, i) => `${i ? "L" : "M"}${x(d.t).toFixed(1)},${y(d[key]).toFixed(1)}`).join("");
+  el("path", { d: path, fill: "none", stroke: color, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+
+  const marked = hoverT !== null && hoverT >= t0 ? nearest(hoverT) : visible[visible.length - 1];
+  if (hoverT !== null && hoverT >= t0) {
+    el("line", { x1: x(marked.t), x2: x(marked.t), y1: M.top, y2: H - M.bottom, class: "crosshair" }, svg);
+  }
+  el("circle", { cx: x(marked.t), cy: y(marked[key]), r: 5, fill: color, stroke: css("--surface-1"), "stroke-width": 2 }, svg);
+}
+
+function renderCells() {
+  const svg = document.getElementById("cells");
+  const W = svg.clientWidth, H = svg.clientHeight;
+  svg.replaceChildren();
+  const last = data[data.length - 1];
+  if (!last || !last.cells.length) {
+    el("text", { x: W / 2, y: H / 2, "text-anchor": "middle", class: "empty" }, svg).textContent = "Waiting for data...";
+    return;
+  }
+  const avg = last.cells.reduce((a, b) => a + b, 0) / last.cells.length;
+  const offsets = last.cells.map(c => (c - avg) * 1000);
+  const extent = Math.max(5, ...offsets.map(Math.abs)) * 1.2;
+  const m = { top: 8, right: 56, bottom: 24, left: 48 };
+  const x = v => m.left + (v + extent) / (2 * extent) * (W - m.left - m.right);
+  const band = (H - m.top - m.bottom) / offsets.length;
+  const barH = Math.min(24, band * 0.6);
+
+  const axis = el("g", { class: "axis" }, svg);
+  for (const v of niceTicks(-extent, extent, 4)) {
+    el("line", { x1: x(v), x2: x(v), y1: m.top, y2: H - m.bottom, class: v === 0 ? "zero" : "gridline" }, axis);
+    el("text", { x: x(v), y: H - 4, "text-anchor": "middle" }, axis).textContent = (v > 0 ? "+" : "") + v;
+  }
+  const tip = document.getElementById("cell-tip");
+  offsets.forEach((off, i) => {
+    const cy = m.top + band * i + band / 2;
+    el("text", { x: m.left - 8, y: cy + 4, "text-anchor": "end" }, axis).textContent = `Cell ${i + 1}`;
+    const x0 = Math.min(x(0), x(off)), w = Math.max(Math.abs(x(off) - x(0)), 2);
+    const bar = el("rect", { x: x0, y: cy - barH / 2, width: w, height: barH, rx: 4, fill: css("--cells") }, svg);
+    el("text", { x: W - m.right + 8, y: cy + 4 }, axis).textContent = `${fmt(last.cells[i], 3)} V`;
+    const hit = el("rect", { x: m.left, y: cy - band / 2, width: W - m.left - m.right, height: band, fill: "transparent" }, svg);
+    hit.addEventListener("pointermove", e => {
+      bar.setAttribute("opacity", 0.8);
+      tip.innerHTML = `<div class="time">Cell ${i + 1}</div>
+        <div class="row">Voltage<b>${fmt(last.cells[i], 3)} V</b></div>
+        <div class="row">vs. average<b>${off >= 0 ? "+" : "−"}${fmt(Math.abs(off), 1)} mV</b></div>`;
+      placeTip(tip, svg.parentElement, e);
+    });
+    hit.addEventListener("pointerleave", () => { bar.removeAttribute("opacity"); tip.style.display = "none"; });
+  });
+  const spread = (Math.max(...last.cells) - Math.min(...last.cells)) * 1000;
+  document.getElementById("cell-note").textContent =
+    `Offset of each cell from the pack average (${fmt(avg, 3)} V), in mV. Spread: ${fmt(spread, 0)} mV.`;
+}
+
+function placeTip(tip, card, e) {
+  tip.style.display = "block";
+  const box = card.getBoundingClientRect();
+  let left = e.clientX - box.left + 16;
+  if (left + tip.offsetWidth > box.width) left = e.clientX - box.left - tip.offsetWidth - 16;
+  tip.style.left = `${left}px`;
+  tip.style.top = `${Math.max(0, e.clientY - box.top - tip.offsetHeight - 12)}px`;
+}
+
+function renderTiles() {
+  const d = data[data.length - 1];
+  if (!d) return;
+  document.getElementById("v-temp").textContent = `${fmt(d.temp, 1)} °C`;
+  document.getElementById("s-temp").textContent = `${fmt(d.temp * 9 / 5 + 32, 0)} °F`;
+  document.getElementById("v-volts").textContent = `${fmt(d.volts, 2)} V`;
+  document.getElementById("s-volts").textContent = d.cells.length ? `${d.cells.length} cells in series` : "";
+  document.getElementById("v-amps").textContent = `${fmt(d.amps, 2)} A`;
+  document.getElementById("s-amps").textContent =
+    d.amps > 0.01 ? "▲ Charging" : d.amps < -0.01 ? "▼ Discharging" : "● Idle";
+  document.getElementById("v-soc").textContent = `${d.soc}%`;
+  const meter = document.getElementById("meter");
+  meter.setAttribute("aria-valuenow", d.soc);
+  meter.firstElementChild.style.width = `${d.soc}%`;
+  meter.firstElementChild.style.background = css(d.soc <= 10 ? "--critical" : d.soc <= 25 ? "--warning" : "--good");
+}
+
+function renderTable() {
+  if (document.getElementById("table-card").hidden) return;
+  document.getElementById("rows").innerHTML = data.slice(-15).reverse().map(d => `<tr>
+    <td>${clock(d.t)}</td><td>${fmt(d.temp, 2)}</td><td>${fmt(d.volts, 3)}</td>
+    <td>${fmt(d.amps, 3)}</td><td>${d.soc}</td><td>${d.cells.map(c => fmt(c, 3)).join(" / ")}</td></tr>`).join("");
+}
+
+// Everything the firmware can report (its `fields` command), grouped for the table.
+// [name, label, register]
+const GROUPS = [
+  ["Measurements", [
+    ["temp", "Temperature", "0x08"], ["voltage", "Voltage", "0x09"], ["current", "Current", "0x0A"],
+    ["avg_current", "Average current", "0x0B"], ["soc", "Relative state of charge", "0x0D"],
+    ["abs_soc", "Absolute state of charge", "0x0E"], ["max_error", "Max error", "0x0C"],
+    ["cells", "Cell voltages 1 / 2 / 3 / 4", "0x3F–0x3C"],
+  ]],
+  ["Capacity and time", [
+    ["remaining_cap", "Remaining capacity", "0x0F"], ["full_charge_cap", "Full charge capacity", "0x10"],
+    ["design_cap", "Design capacity", "0x18"], ["run_time_to_empty", "Run time to empty", "0x11"],
+    ["avg_time_to_empty", "Average time to empty", "0x12"], ["avg_time_to_full", "Average time to full", "0x13"],
+  ]],
+  ["Charging and health", [
+    ["charging_current", "Charging current requested", "0x14"], ["charging_voltage", "Charging voltage requested", "0x15"],
+    ["cycle_count", "Cycle count", "0x17"], ["soh", "State of health", "0x4F"],
+    ["soh_fcc", "State of health: full charge capacity", "MAC 0x0077"], ["soh_energy", "State of health: energy", "MAC 0x0077"],
+  ]],
+  ["Status registers", [
+    ["battery_status", "BatteryStatus", "0x16"], ["battery_mode", "BatteryMode", "0x03"],
+    ["operation_status", "OperationStatus", "MAC 0x0054"], ["charging_status", "ChargingStatus", "MAC 0x0055"],
+    ["gauging_status", "GaugingStatus", "MAC 0x0056"], ["manufacturing_status", "ManufacturingStatus", "MAC 0x0057"],
+    ["safety_alert", "SafetyAlert", "MAC 0x0050"], ["safety_status", "SafetyStatus", "MAC 0x0051"],
+    ["pf_alert", "PFAlert", "MAC 0x0052"], ["pf_status", "PFStatus", "MAC 0x0053"],
+  ]],
+  ["AtRate and alarms", [
+    ["at_rate", "AtRate", "0x04"], ["at_rate_time_to_full", "AtRate time to full", "0x05"],
+    ["at_rate_time_to_empty", "AtRate time to empty", "0x06"], ["at_rate_ok", "AtRate OK", "0x07"],
+    ["remaining_cap_alarm", "Remaining capacity alarm", "0x01"], ["remaining_time_alarm", "Remaining time alarm", "0x02"],
+  ]],
+  ["Turbo and battery trip point", [
+    ["max_turbo_power", "Max turbo power", "0x59"], ["sus_turbo_power", "Sustained turbo power", "0x5A"],
+    ["turbo_current", "Max turbo current", "0x5E"], ["sus_turbo_current", "Sustained turbo current", "0x5F"],
+    ["turbo_pack_r", "Pack resistance", "0x5B"], ["turbo_sys_r", "System resistance", "0x5C"],
+    ["turbo_rhf_effective", "Effective high-frequency resistance", "0x68"], ["turbo_vload", "Load voltage", "0x69"],
+    ["turbo_edv", "Turbo end-of-discharge voltage", "0x5D"],
+    ["btp_discharge_set", "Trip point, discharge", "0x4A"], ["btp_charge_set", "Trip point, charge", "0x4B"],
+  ]],
+  ["Device info", [
+    ["manufacturer_name", "Manufacturer", "0x20"], ["device_name", "Device name", "0x21"],
+    ["chemistry", "Chemistry", "0x22"], ["manufacture_date", "Manufacture date", "0x1B"],
+    ["serial_number", "Serial number", "0x1C"], ["design_voltage", "Design voltage", "0x19"],
+    ["spec_info", "Specification info", "0x1A"], ["device_type", "Device type", "MAC 0x0001"],
+    ["firmware_version", "Firmware version", "MAC 0x0002"], ["hardware_version", "Hardware version", "MAC 0x0003"],
+    ["chem_id", "Chemistry ID", "MAC 0x0006"],
+  ]],
+];
+const ALL_FIELDS = GROUPS.flatMap(([, rows]) => rows.map(([name]) => name));
+
+// Status values are decoded with the driver's own field definitions (bq41z50.ddsl, via
+// /api/driver). The MAC-read ones share their block command's bit layout.
+const STATUS_FIELDSETS = {
+  battery_status: "battery_status", battery_mode: "battery_mode", spec_info: "specification_info",
+  operation_status: "operation_status", charging_status: "charging_status", gauging_status: "gauging_status",
+  manufacturing_status: "manufacturing_status", safety_alert: "safety_alert", safety_status: "safety_status",
+  pf_alert: "pf_alert", pf_status: "pf_status",
+};
+// Bits that mean a fault or alarm, shown with a warning style. The .ddsl doesn't say, so this is
+// hard-coded from the TRM: every bit of the safety and PF registers, plus these.
+const ALARM_BITS = {
+  battery_status: ["RTA", "RCA", "TDA", "OTA", "TCA", "OCA"],
+  battery_mode: ["CF"],
+  operation_status: ["SS", "PF"],
+};
+const ALL_BITS_ALARM = new Set(["safety_alert", "safety_status", "pf_alert", "pf_status"]);
+
+function minutes(n) {
+  if (n === 65535) return "— (not applicable)";
+  return n < 60 ? `${n} min` : `${Math.floor(n / 60)} h ${n % 60} min`;
+}
+
+// Turns a firmware value such as "15012mV" into display text.
+function formatValue(raw) {
+  if (raw.endsWith("mV") && raw.includes("/")) {
+    return raw.slice(0, -2).split("/").map(c => fmt(c / 1000, 3)).join(" / ") + " V";
+  }
+  const m = raw.match(/^(-?\d+(?:\.\d+)?)([A-Za-z%]*)$/);
+  if (!m) return raw;
+  const n = +m[1];
+  switch (m[2]) {
+    case "C": return `${fmt(n, 2)} °C`;
+    case "mV": return `${fmt(n / 1000, 3)} V`;
+    case "mA": return `${fmt(n / 1000, 3)} A`;
+    case "mAh": return `${n} mAh`;
+    case "cWh": return `${fmt(n / 100, 2)} Wh`;
+    case "cW": return `${fmt(n / 100, 2)} W`;
+    case "mOhm": return `${n} mΩ`;
+    case "min": return minutes(n);
+    case "%": return `${n}%`;
+    default: return raw;
+  }
+}
+
+// Set flags of a status value ("0x..." from `get`), as chips, using the driver's field definitions.
+function flagChips(name, raw) {
+  const fieldset = api && [...api.registers, ...api.commands].find(r => r.name === STATUS_FIELDSETS[name]);
+  if (!fieldset) return null;
+  const value = BigInt(raw);
+  const wrap = document.createElement("div");
+  wrap.className = "flags";
+  for (const f of fieldset.fields) {
+    const v = (value >> BigInt(f.lo)) & ((1n << BigInt(f.hi - f.lo + 1)) - 1n);
+    let text;
+    if (f.type === "bool") {
+      if (!v) continue;
+      text = f.name;
+    } else {
+      // Multi-bit fields: show enums and anything non-zero; spec_info is all multi-bit, show it all.
+      if (!v && !f.enum && name !== "spec_info") continue;
+      text = `${f.name}=${f.enum?.[String(v)] ?? v}`;
+    }
+    const chip = document.createElement("span");
+    const alarm = f.type === "bool" && (ALL_BITS_ALARM.has(name) || ALARM_BITS[name]?.includes(f.name));
+    chip.className = alarm ? "flag alarm" : "flag";
+    chip.textContent = text;
+    wrap.appendChild(chip);
+  }
+  if (!wrap.children.length) wrap.innerHTML = '<span class="none">no flags set</span>';
+  return wrap;
+}
+
+const valueCells = {};
+function buildGroups() {
+  const root = document.getElementById("groups");
+  for (const [title, rows] of GROUPS) {
+    const card = document.createElement("div");
+    card.className = "group";
+    card.innerHTML = `<h3>${title}</h3><table><thead><tr><th>Field</th><th>Value</th><th>Register</th></tr></thead><tbody></tbody></table>`;
+    const body = card.querySelector("tbody");
+    for (const [name, label, reg] of rows) {
+      const tr = document.createElement("tr");
+      tr.dataset.search = `${label} ${name} ${reg}`.toLowerCase();
+      tr.innerHTML = `<td></td><td class="val">—</td><td class="reg"></td>`;
+      tr.cells[0].textContent = label;
+      tr.cells[2].textContent = reg;
+      valueCells[name] = tr.cells[1];
+      body.appendChild(tr);
+    }
+    root.appendChild(card);
+  }
+}
+
+// Last good value of each field, kept when the gauge refuses it so the table never goes blank.
+const lastGood = {};
+
+function renderAllData(values, t) {
+  for (const name of ALL_FIELDS) {
+    const cell = valueCells[name];
+    if (values[name] === undefined) continue;
+    if (values[name] !== null) lastGood[name] = { raw: values[name], t };
+    const kept = lastGood[name];
+    if (!kept) {
+      cell.className = "val failed";
+      cell.textContent = "read failed";
+      cell.title = "";
+      continue;
+    }
+    const raw = kept.raw, stale = values[name] === null;
+    cell.className = stale ? "val stale" : "val";
+    cell.title = stale ? `Refused at ${clock(t)}; showing the value read at ${clock(kept.t)}` : raw;
+    if (STATUS_FIELDSETS[name]) {
+      cell.innerHTML = "";
+      const hex = document.createElement("span");
+      hex.className = "hex";
+      hex.textContent = raw;
+      cell.append(hex);
+      const chips = flagChips(name, raw);
+      if (chips) cell.append(chips);
+    } else {
+      cell.textContent = formatValue(raw);
+    }
+    if (stale) {
+      const note = document.createElement("div");
+      note.className = "stale-note";
+      note.textContent = `refused at ${clock(t)}, value from ${clock(kept.t)}`;
+      cell.appendChild(note);
+    }
+  }
+  const failed = ALL_FIELDS.filter(n => values[n] === null).length;
+  document.getElementById("all-updated").textContent = `Updated ${clock(t)} · ${ALL_FIELDS.length} fields` +
+    (failed ? ` · ${failed} refused by the gauge (it may be sealed); their last values are kept` : "");
+}
+
+document.getElementById("filter").addEventListener("input", e => {
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll(".group").forEach(group => {
+    let shown = 0;
+    group.querySelectorAll("tbody tr").forEach(tr => {
+      const match = !q || tr.dataset.search.includes(q);
+      tr.hidden = !match;
+      shown += match;
+    });
+    group.hidden = !shown;
+  });
+});
+
+buildGroups();
+
+const charts = [...document.querySelectorAll(".chart")];
+function renderAll() {
+  charts.forEach(renderLine);
+  renderCells();
+  renderTiles();
+  renderTable();
+}
+
+charts.forEach(card => {
+  const svg = card.querySelector("svg"), tip = card.querySelector(".tooltip");
+  svg.addEventListener("pointermove", e => {
+    if (!card._scale || !data.length) return;
+    const { t0, W } = card._scale;
+    const px = e.clientX - svg.getBoundingClientRect().left;
+    const t = t0 + (px - M.left) / (W - M.left - M.right) * range;
+    if (t < t0 || t > t0 + range) return;
+    hoverT = t;
+    charts.forEach(renderLine);
+    const d = nearest(t);
+    tip.innerHTML = `<div class="time">${clock(d.t)}</div>` + Object.entries(SERIES).map(([k, s]) =>
+      `<div class="row"><span class="swatch" style="width:12px;height:3px;border-radius:2px;background:var(${s.color})"></span>
+       ${s.label}<b>${fmt(d[k], s.digits)} ${s.unit}</b></div>`).join("");
+    placeTip(tip, card, e);
+  });
+  svg.addEventListener("pointerleave", () => {
+    hoverT = null;
+    tip.style.display = "none";
+    charts.forEach(renderLine);
+  });
+});
+
+document.querySelectorAll(".ranges button").forEach(btn => btn.addEventListener("click", () => {
+  range = +btn.dataset.range;
+  document.querySelectorAll(".ranges button").forEach(b => b.setAttribute("aria-pressed", b === btn));
+  charts.forEach(renderLine);
+}));
+
+document.getElementById("toggle-table").addEventListener("click", e => {
+  const card = document.getElementById("table-card");
+  card.hidden = !card.hidden;
+  e.target.textContent = card.hidden ? "Show table" : "Hide table";
+  e.target.setAttribute("aria-expanded", !card.hidden);
+  renderTable();
+});
+
+window.addEventListener("resize", renderAll);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", renderAll);
+
+function setStatus(text, state) {
+  document.getElementById("status").textContent = text;
+  document.getElementById("dot").className = `dot ${state}`;
+}
+
+const POLL_CMD = `get ${ALL_FIELDS.join(" ")}`;
+
+// ---- Driver API explorer -------------------------------------------------------------------
+// The metadata comes from tools/driver_api.json, generated from the driver's bq41z50.ddsl.
+const TABS = [
+  { key: "registers", label: "Registers", cmd: "reg", note: "SBS and BQ41Z50 registers: bq.device.<name>().read_async() / write_async()." },
+  { key: "reads", label: "MAC reads", cmd: "mac", note: "ManufacturerBlockAccess commands that return data: bq.device.<name>().dispatch_out_async()." },
+  { key: "actions", label: "MAC actions", cmd: "run", note: "ManufacturerBlockAccess commands that change the gauge's state: bq.device.<name>().dispatch_async(). Each asks for confirmation." },
+  { key: "buffers", label: "Buffers", cmd: "buf", note: "SBS block buffers: length byte, then data." },
+  { key: "helpers", label: "Functions", cmd: "call", note: "The driver's hand-written functions (lib.rs and the SmartBattery setters). Numbers take decimal or 0x hex; data takes hex bytes." },
+];
+let api = null;
+let apiTab = "registers";
+const apiState = {};   // "kind:name" -> { raw, error, failed, t }
+const watched = new Set();
+
+function apiItems(tab) {
+  if (!api) return [];
+  if (tab === "reads") return api.commands.filter(c => c.kind === "read");
+  if (tab === "actions") return api.commands.filter(c => c.kind === "action");
+  return api[tab];
+}
+const readCmd = tab => ({ registers: "reg", reads: "mac", buffers: "buf" })[tab];
+const readable = (tab, item) => readCmd(tab) && !item.sideEffects;
+
+function hexAddr(tab, item) {
+  if (item.sbs != null) return `0x${item.sbs.toString(16).padStart(2, "0").toUpperCase()} (block)`;
+  if (tab === "reads" || tab === "actions") return `MAC 0x${item.mac.toString(16).padStart(4, "0").toUpperCase()}`;
+  if (item.address == null) return "";
+  return `0x${item.address.toString(16).padStart(2, "0").toUpperCase()}`;
+}
+
+function bytesToBigInt(hex) {
+  let v = 0n;
+  for (let i = hex.length - 2; i >= 0; i -= 2) v = (v << 8n) | BigInt(parseInt(hex.slice(i, i + 2), 16));
+  return v;
+}
+
+// Decodes raw little-endian bytes into the fieldset's named fields, as chips.
+function fieldChips(item, hex) {
+  const wrap = document.createElement("div");
+  wrap.className = "flags";
+  const value = bytesToBigInt(hex);
+  for (const f of item.fields) {
+    const width = f.hi - f.lo + 1;
+    let v = (value >> BigInt(f.lo)) & ((1n << BigInt(width)) - 1n);
+    let text;
+    if (f.type === "bool") {
+      if (!v) continue;
+      text = f.name;
+    } else {
+      if (f.type === "int" && v >> BigInt(width - 1)) v -= 1n << BigInt(width);
+      text = `${f.name}=${f.enum?.[String(v)] ?? (width > 8 && f.type === "uint" && item.fields.length > 1 ? "0x" + v.toString(16) : v)}`;
+    }
+    const chip = document.createElement("span");
+    chip.className = "flag";
+    chip.textContent = text;
+    wrap.appendChild(chip);
+  }
+  if (!wrap.children.length && item.fields.length) wrap.innerHTML = '<span class="none">no flags set</span>';
+  return wrap;
+}
+
+function bufferText(hex) {
+  const len = parseInt(hex.slice(0, 2), 16);
+  let text = "";
+  for (let i = 1; i <= Math.min(len, hex.length / 2 - 1); i++) {
+    const c = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+    text += c >= 32 && c < 127 ? String.fromCharCode(c) : "·";
+  }
+  return `length ${len}: "${text}"`;
+}
+
+function renderApiValue(tab, item, cell) {
+  const st = apiState[`${tab}:${item.name}`];
+  cell.replaceChildren();
+  const raw = document.createElement("div");
+  raw.className = "raw";
+  const why = st?.error || (st?.failed ? "refused by the gauge (it may be sealed)" : null);
+  if (!st) {
+    raw.textContent = "—";
+  } else if (!st.raw) {
+    raw.className = st.error ? "raw error" : "raw failed";
+    raw.textContent = st.error || "read failed (the gauge may be sealed)";
+  } else {
+    raw.className = why ? "raw stale" : "raw";
+    raw.textContent = st.raw;
+    raw.title = `Read ${clock(st.t)}`;
+  }
+  cell.appendChild(raw);
+  if (st?.raw && why) {
+    const note = document.createElement("div");
+    note.className = "stale-note";
+    note.textContent = `Last read at ${clock(st.failedAt)} failed (${why}); showing the value from ${clock(st.t)}`;
+    cell.appendChild(note);
+  }
+  if (st?.raw) {
+    if (tab === "buffers") {
+      const d = document.createElement("div");
+      d.className = "doc";
+      d.textContent = bufferText(st.raw);
+      cell.appendChild(d);
+    } else if (item.fields?.length) {
+      cell.appendChild(fieldChips(item, st.raw));
+    }
+  }
+}
+
+function confirmRun(label, item) {
+  if (item.disruptive) {
+    const typed = prompt(`${label} can change the gauge in ways that are hard or impossible to undo.\n` +
+      `Type its name to confirm:`);
+    return typed?.trim() === item.name;
+  }
+  return confirm(`Run ${label} on the gauge?`);
+}
+
+// Reads items in batches small enough for one reply line, storing each result.
+async function readItems(tab, names) {
+  const cmd = readCmd(tab);
+  for (let i = 0; i < names.length; i += 10) {
+    const batch = names.slice(i, i + 10);
+    const r = await sendCommand(`${cmd} ${batch.join(" ")}`);
+    const t = Date.now() / 1000;
+    for (const name of batch) {
+      const key = `${tab}:${name}`;
+      if (r.ok && r.values[name] != null) {
+        apiState[key] = { raw: r.values[name], t };
+        continue;
+      }
+      // Keep the last good bytes and note the failure, rather than blanking the row.
+      const prev = apiState[key];
+      apiState[key] = {
+        ...(prev?.raw ? { raw: prev.raw, t: prev.t } : {}),
+        error: r.ok ? null : r.error,
+        failed: r.ok,
+        failedAt: t,
+      };
+    }
+  }
+}
+
+function renderApiRows() {
+  const body = document.getElementById("api-rows");
+  body.replaceChildren();
+  const tab = apiTab, items = apiItems(tab), q = document.getElementById("api-filter").value.trim().toLowerCase();
+  document.getElementById("api-tab-note").textContent = TABS.find(t => t.key === tab).note;
+  for (const item of items) {
+    const addr = tab === "helpers" ? "" : hexAddr(tab, item);
+    if (q && !`${item.name} ${addr} ${item.doc}`.toLowerCase().includes(q)) continue;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td><div class="name"></div><div class="doc"></div></td><td class="meta"></td><td></td><td><div class="actions"></div></td>`;
+    tr.querySelector(".name").textContent = item.name;
+    tr.querySelector(".doc").textContent = item.doc;
+    tr.cells[1].textContent = tab === "helpers" ? "" : `${addr}\n`;
+    if (tab !== "helpers" && tab !== "actions") {
+      tr.cells[1].append(`${item.size} B · ${item.access}`);
+      tr.cells[1].style.whiteSpace = "pre-line";
+    }
+    const valueCell = tr.cells[2], actions = tr.querySelector(".actions");
+    const button = (label, onClick, danger) => {
+      const b = document.createElement("button");
+      b.className = danger ? "toggle danger" : "toggle";
+      b.textContent = label;
+      b.addEventListener("click", async () => {
+        b.disabled = true;
+        try { await onClick(); } finally { b.disabled = false; }
+      });
+      actions.appendChild(b);
+      return b;
+    };
+
+    if (readable(tab, item)) {
+      renderApiValue(tab, item, valueCell);
+      button("Read", async () => { await readItems(tab, [item.name]); renderApiValue(tab, item, valueCell); });
+      const label = document.createElement("label");
+      label.innerHTML = '<input type="checkbox"> Watch';
+      const box = label.querySelector("input");
+      box.checked = watched.has(`${tab}:${item.name}`);
+      box.addEventListener("change", () => {
+        box.checked ? watched.add(`${tab}:${item.name}`) : watched.delete(`${tab}:${item.name}`);
+      });
+      actions.appendChild(label);
+    } else if (tab === "reads") {
+      valueCell.innerHTML = '<div class="doc">Not polled: reading it switches the gauge into calibration output mode.</div>';
+      button("Read", async () => {
+        if (!confirm(`${item.name} puts the gauge into calibration output mode. Read it anyway?`)) return;
+        await readItems(tab, [item.name]);
+        renderApiValue(tab, item, valueCell);
+      }, true);
+    }
+
+    if ((tab === "registers" || tab === "buffers") && item.access !== "RO") {
+      const input = document.createElement("input");
+      input.className = "arg";
+      input.placeholder = tab === "registers" ? `${item.size} bytes hex, little-endian` : "hex bytes";
+      input.setAttribute("aria-label", `Value to write to ${item.name}`);
+      valueCell.appendChild(input);
+      button("Write", async () => {
+        const hex = input.value.trim().replace(/^0x/, "").replace(/\s+/g, "");
+        if (!hex) { input.focus(); return; }
+        if (!confirm(`Write ${hex} to ${item.name}?`)) return;
+        const r = await sendCommand(`${tab === "registers" ? "regw" : "bufw"} ${item.name} ${hex}`);
+        if (r.ok) await readItems(tab, [item.name]);
+        else apiState[`${tab}:${item.name}`] = { error: r.error };
+        renderApiValue(tab, item, valueCell);
+        valueCell.appendChild(input);
+      }, true);
+    }
+
+    if (tab === "actions") {
+      const out = document.createElement("div");
+      out.className = "raw";
+      valueCell.appendChild(out);
+      button("Run", async () => {
+        if (!confirmRun(item.name, item)) return;
+        const r = await sendCommand(`run ${item.name}`);
+        out.className = r.ok ? "raw" : "raw error";
+        out.textContent = r.ok ? `ok (${clock(Date.now() / 1000)})` : r.error;
+      }, item.disruptive);
+    }
+
+    if (tab === "helpers") {
+      const inputs = item.args.map(a => {
+        const input = document.createElement("input");
+        input.className = "arg";
+        input.placeholder = a;
+        input.setAttribute("aria-label", a);
+        valueCell.appendChild(input);
+        return input;
+      });
+      const out = document.createElement("div");
+      out.className = "raw";
+      valueCell.prepend(out);
+      button("Call", async () => {
+        const args = inputs.map(i => i.value.trim());
+        if (args.some(a => !a)) { inputs[args.findIndex(a => !a)].focus(); return; }
+        if (item.disruptive && !confirmRun(item.name, { ...item, disruptive: item.name === "seal_fg" })) return;
+        const r = await sendCommand(`call ${item.name} ${args.join(" ")}`.trim());
+        out.className = r.ok ? "raw" : "raw error";
+        out.textContent = r.ok ? (r.values[item.name] ?? "ok") : r.error;
+      }, item.disruptive);
+    }
+    body.appendChild(tr);
+  }
+}
+
+function buildApi() {
+  const tabs = document.getElementById("api-tabs");
+  for (const t of TABS) {
+    const b = document.createElement("button");
+    b.className = "toggle";
+    b.setAttribute("role", "tab");
+    b.textContent = `${t.label} (${apiItems(t.key).length})`;
+    b.setAttribute("aria-selected", t.key === apiTab);
+    b.addEventListener("click", () => {
+      apiTab = t.key;
+      tabs.querySelectorAll("button").forEach(x => x.setAttribute("aria-selected", x === b));
+      renderApiRows();
+    });
+    tabs.appendChild(b);
+  }
+  renderApiRows();
+}
+
+document.getElementById("api-filter").addEventListener("input", renderApiRows);
+document.getElementById("read-all").addEventListener("click", async e => {
+  e.target.disabled = true;
+  const started = performance.now();
+  try {
+    for (const tab of ["registers", "reads", "buffers"]) {
+      await readItems(tab, apiItems(tab).filter(i => readable(tab, i)).map(i => i.name));
+    }
+  } finally {
+    e.target.disabled = false;
+  }
+  const states = Object.values(apiState);
+  document.getElementById("api-note").textContent =
+    `Read ${states.length} items in ${Math.round(performance.now() - started)} ms · ` +
+    `${states.filter(s => s.failed).length} refused, ${states.filter(s => s.error).length} errors`;
+  renderApiRows();
+});
+
+// Watched items ride along with each poll.
+async function pollWatched() {
+  if (!watched.size) return;
+  for (const tab of ["registers", "reads", "buffers"]) {
+    const names = [...watched].filter(k => k.startsWith(`${tab}:`)).map(k => k.slice(tab.length + 1));
+    if (names.length) await readItems(tab, names);
+  }
+  if (apiItems(apiTab).some(i => watched.has(`${apiTab}:${i.name}`))) renderApiRows();
+}
+
+fetch("/api/driver").then(r => r.json()).then(meta => { api = meta; buildApi(); });
+const POLL_MS = 1000;
+let paused = false;
+
+async function sendCommand(cmd) {
+  const res = await fetch("/api/command", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cmd }),
+  });
+  return res.json();
+}
+
+let lastGoodPoll = null;
+
+// Shown while polls fail; the values on the page stay at the last good reading.
+function showProblem(title, detail) {
+  const banner = document.getElementById("banner");
+  document.getElementById("banner-title").textContent = title;
+  document.getElementById("banner-detail").textContent =
+    (lastGoodPoll ? `Showing the last values, read at ${clock(lastGoodPoll)}.` : "No values have been read yet.") +
+    (detail ? ` (${detail})` : "");
+  banner.hidden = false;
+  document.body.classList.toggle("stale", lastGoodPoll !== null);
+}
+
+function clearProblem() {
+  document.getElementById("banner").hidden = true;
+  document.body.classList.remove("stale");
+}
+
+// The page drives the board: one command per second, the next one scheduled only after the
+// previous reply so slow replies never pile up.
+async function poll() {
+  const started = performance.now();
+  if (!paused) {
+    try {
+      const r = await sendCommand(POLL_CMD);
+      if (r.ok) {
+        const v = r.values, t = Date.now() / 1000;
+        lastGoodPoll = t;
+        clearProblem();
+        renderAllData(v, t);
+        // Chart only complete readings; a refused field would leave a gap in the history.
+        if ([v.temp, v.voltage, v.current, v.soc].every(x => x != null)) {
+          data.push({
+            t,
+            temp: parseFloat(v.temp),
+            volts: parseFloat(v.voltage) / 1000,
+            amps: parseFloat(v.current) / 1000,
+            soc: parseFloat(v.soc),
+            cells: v.cells ? v.cells.slice(0, -2).split("/").map(c => c / 1000) : [],
+          });
+          const cutoff = t - MAX_HISTORY_S;
+          while (data.length && data[0].t < cutoff) data.shift();
+        }
+        renderAll();
+        await pollWatched();
+        setStatus(`${mode === "demo" ? "Simulated board" : "Live"} — polling every second, last reply ${r.ms} ms` +
+          (watched.size ? `, plus ${watched.size} watched` : ""), "live");
+      } else if (r.connected && /NoAcknowledge/.test(r.error)) {
+        showProblem("The gauge is not responding: it NACKs every request.", r.error);
+        setStatus("Gauge not responding — retrying every second", "warn");
+      } else if (r.connected) {
+        showProblem("The gauge returned an error.", r.error);
+        setStatus(`Gauge error: ${r.error}`, "warn");
+      } else {
+        showProblem("The Pico 2 is not connected.", r.error);
+        setStatus(r.error, "warn");
+      }
+    } catch {
+      showProblem("Lost connection to the dashboard server.", "is tools/web_dashboard.py still running?");
+      setStatus("Lost connection to the dashboard server — retrying...", "warn");
+    }
+  }
+  setTimeout(poll, Math.max(0, POLL_MS - (performance.now() - started)));
+}
+
+document.getElementById("toggle-poll").addEventListener("click", e => {
+  paused = !paused;
+  e.target.textContent = paused ? "Resume polling" : "Pause polling";
+  e.target.setAttribute("aria-pressed", paused);
+  if (paused) setStatus("Polling paused", "");
+});
+
+fetch("/api/info").then(r => r.json()).then(info => { mode = info.mode; }).catch(() => {});
+poll();
+renderAll();
+</script>
+</body>
+</html>
