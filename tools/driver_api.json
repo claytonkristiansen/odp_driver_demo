@@ -1,0 +1,8177 @@
+{
+ "source": "bq41z50.ddsl",
+ "registers": [
+  {
+   "name": "remaining_capacity_alarm",
+   "address": 1,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "REMAINING_CAPACITY_ALARM",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "remaining_time_alarm",
+   "address": 2,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "REMAINING_TIME_ALARM",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "battery_mode",
+   "address": 3,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "ICC",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "PBS",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "CF",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "CC",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "PB",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "AM",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "CHGM",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "CAPM",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    }
+   ]
+  },
+  {
+   "name": "at_rate",
+   "address": 4,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "AT_RATE",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "at_rate_time_to_full",
+   "address": 5,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "AT_RATE_TIME_TO_FULL",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "at_rate_time_to_empty",
+   "address": 6,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "AT_RATE_TIME_TO_EMPTY",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "at_rate_ok",
+   "address": 7,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "AT_RATE_OK",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "temperature",
+   "address": 8,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TEMPERATURE",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "voltage",
+   "address": 9,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "VOLTAGE",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "current",
+   "address": 10,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CURRENT",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "avg_current",
+   "address": 11,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "AVG_CURRENT",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "max_error",
+   "address": 12,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MAX_ERROR",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "relative_state_of_charge",
+   "address": 13,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "RELATIVE_STATE_OF_CHARGE",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "absolute_state_of_charge",
+   "address": 14,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "ABSOLUTE_STATE_OF_CHARGE",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "remaining_capacity",
+   "address": 15,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "REMAINING_CAPACITY",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "full_charge_capacity",
+   "address": 16,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "FULL_CHARGE_CAPACITY",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "run_time_to_empty",
+   "address": 17,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "RUN_TIME_TO_EMPTY",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "average_time_to_empty",
+   "address": 18,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "AVERAGE_TIME_TO_EMPTY",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "average_time_to_full",
+   "address": 19,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "AVERAGE_TIME_TO_FULL",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "charging_current",
+   "address": 20,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CHARGING_CURRENT",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "charging_voltage",
+   "address": 21,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CHARGING_VOLTAGE",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "battery_status",
+   "address": 22,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "EC",
+     "lo": 0,
+     "hi": 3,
+     "type": "uint"
+    },
+    {
+     "name": "FD",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "FC",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "DSG",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "INIT",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "RTA",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "RCA",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "TDA",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "OTA",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "TCA",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "OCA",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    }
+   ]
+  },
+  {
+   "name": "cycle_count",
+   "address": 23,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CYCLE_COUNT",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "design_capacity",
+   "address": 24,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "DESIGN_CAPACITY",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "design_voltage",
+   "address": 25,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "DESIGN_VOLTAGE",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "specification_info",
+   "address": 26,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "REVISION",
+     "lo": 0,
+     "hi": 3,
+     "type": "uint"
+    },
+    {
+     "name": "VERSION",
+     "lo": 4,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "VSCALE",
+     "lo": 8,
+     "hi": 11,
+     "type": "uint"
+    },
+    {
+     "name": "IPSCALE",
+     "lo": 12,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "manufacture_date",
+   "address": 27,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MANUFACTURE_DATE",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "serial_number",
+   "address": 28,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "SERIAL_NUMBER",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "cell_voltage_4",
+   "address": 60,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CELL_VOLTAGE_4",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "cell_voltage_3",
+   "address": 61,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CELL_VOLTAGE_3",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "cell_voltage_2",
+   "address": 62,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CELL_VOLTAGE_2",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "cell_voltage_1",
+   "address": 63,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CELL_VOLTAGE_1",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ]
+  },
+  {
+   "name": "btp_discharge_set",
+   "address": 74,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "BTP_DISCHARGE_SET",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "btp_charge_set",
+   "address": 75,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "BTP_CHARGE_SET",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "state_of_health_soh",
+   "address": 79,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "STATE_OF_HEALTH_SOH",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "max_turbo_power",
+   "address": 89,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MAX_TURBO_POWER",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "sus_turbo_power",
+   "address": 90,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "SUS_TURBO_POWER",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "turbo_pack_r",
+   "address": 91,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TURBO_PACK_R",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "turbo_sys_r",
+   "address": 92,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TURBO_SYS_R",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "turbo_edv",
+   "address": 93,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TURBO_EDV",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "turbo_current",
+   "address": 94,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TURBO_CURRENT",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "sus_turbo_current",
+   "address": 95,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "SUS_TURBO_CURRENT",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "turbo_rhf_effective",
+   "address": 104,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TURBO_RHF_EFFECTIVE",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  },
+  {
+   "name": "turbo_vload",
+   "address": 105,
+   "access": "RO",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TURBO_VLOAD",
+     "lo": 0,
+     "hi": 15,
+     "type": "int"
+    }
+   ]
+  }
+ ],
+ "commands": [
+  {
+   "name": "mac_device_type",
+   "address": 4456704,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "DEVICE_TYPE",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 1
+  },
+  {
+   "name": "mac_firmware_version",
+   "address": 4456960,
+   "access": "RW",
+   "size": 11,
+   "doc": "",
+   "fields": [
+    {
+     "name": "DEVICE_NUMBER",
+     "lo": 72,
+     "hi": 87,
+     "type": "uint"
+    },
+    {
+     "name": "VERSION",
+     "lo": 56,
+     "hi": 71,
+     "type": "uint"
+    },
+    {
+     "name": "BUILD_NUMBER",
+     "lo": 40,
+     "hi": 55,
+     "type": "uint"
+    },
+    {
+     "name": "FIRMWARE_TYPE",
+     "lo": 32,
+     "hi": 39,
+     "type": "uint"
+    },
+    {
+     "name": "IMPEDENCE_TRACK_VERS",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 2
+  },
+  {
+   "name": "mac_hardware_version",
+   "address": 4457216,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "HW_VERS",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 3
+  },
+  {
+   "name": "mac_instruction_flash_signature",
+   "address": 4457472,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "INSN_FLSH_SIG",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 4
+  },
+  {
+   "name": "mac_static_df_signature",
+   "address": 4457728,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "STATIC_DF_SIG",
+     "lo": 0,
+     "hi": 14,
+     "type": "uint"
+    },
+    {
+     "name": "SIG_MISMATCH",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 5
+  },
+  {
+   "name": "mac_chem_id",
+   "address": 4457984,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CHEM_ID",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 6
+  },
+  {
+   "name": "mac_static_chem_df_sig",
+   "address": 4458496,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "STATIC_CHEM_DF_SIG",
+     "lo": 0,
+     "hi": 14,
+     "type": "uint"
+    },
+    {
+     "name": "SIG_MISMATCH",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 8
+  },
+  {
+   "name": "mac_all_df_signature",
+   "address": 4458752,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "STATIC_CHEM_DF_SIG",
+     "lo": 0,
+     "hi": 14,
+     "type": "uint"
+    },
+    {
+     "name": "SIG_MISMATCH",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 9
+  },
+  {
+   "name": "mac_shutdown_mode",
+   "address": 4460544,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 16
+  },
+  {
+   "name": "mac_sleep_mode",
+   "address": 4460800,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 17
+  },
+  {
+   "name": "mac_auto_cc_offset",
+   "address": 4461312,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 19
+  },
+  {
+   "name": "mac_fuse_toggle",
+   "address": 4463872,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 29
+  },
+  {
+   "name": "mac_pchg_fet_toggle",
+   "address": 4464128,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 30
+  },
+  {
+   "name": "mac_chg_fet_toggle",
+   "address": 4464384,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 31
+  },
+  {
+   "name": "mac_dsg_fet_toggle",
+   "address": 4464640,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 32
+  },
+  {
+   "name": "mac_gauging",
+   "address": 4464896,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 33
+  },
+  {
+   "name": "mac_fet_ctrl",
+   "address": 4465152,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 34
+  },
+  {
+   "name": "mac_lifetime_data_collection",
+   "address": 4465408,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 35
+  },
+  {
+   "name": "mac_permanent_failure",
+   "address": 4465664,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 36
+  },
+  {
+   "name": "mac_black_block_recorder",
+   "address": 4465920,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 37
+  },
+  {
+   "name": "mac_fuse",
+   "address": 4466176,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 38
+  },
+  {
+   "name": "mac_led_disp_en",
+   "address": 4466432,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 39
+  },
+  {
+   "name": "mac_lifetime_data_rst",
+   "address": 4466688,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 40
+  },
+  {
+   "name": "mac_pf_data_rst",
+   "address": 4466944,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 41
+  },
+  {
+   "name": "mac_blk_box_rec_reset",
+   "address": 4467200,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 42
+  },
+  {
+   "name": "mac_led_toggle",
+   "address": 4467456,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 43
+  },
+  {
+   "name": "mac_led_disp_press",
+   "address": 4467712,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 44
+  },
+  {
+   "name": "mac_calibration_mode",
+   "address": 4467968,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 45
+  },
+  {
+   "name": "mac_lifetime_data_flush",
+   "address": 4468224,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 46
+  },
+  {
+   "name": "mac_lifetime_data_speed_up_mode",
+   "address": 4468480,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 47
+  },
+  {
+   "name": "mac_seal",
+   "address": 4468736,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 48
+  },
+  {
+   "name": "mac_device_reset",
+   "address": 4473088,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 65
+  },
+  {
+   "name": "mac_safety_alert",
+   "address": 4476928,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CUV",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "COV",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "OCC1",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "OCC2",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "OCD1",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "OCD2",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "AOCDL",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "AOCCL",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "ASCDL",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "OTC",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "OTD",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "CUVC",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "DCOT",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "OTF",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "PTO",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "PTOS",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "CTO",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "CTOS",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "OC",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "CHGC",
+     "lo": 23,
+     "hi": 23,
+     "type": "bool"
+    },
+    {
+     "name": "CHGV",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    },
+    {
+     "name": "PCHGC",
+     "lo": 25,
+     "hi": 25,
+     "type": "bool"
+    },
+    {
+     "name": "UTC",
+     "lo": 26,
+     "hi": 26,
+     "type": "bool"
+    },
+    {
+     "name": "UTD",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "COVL",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "OCDL",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 80
+  },
+  {
+   "name": "mac_safety_status",
+   "address": 4477184,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CUV",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "COV",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "OCC1",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "OCC2",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "OCD1",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "OCD2",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "AOCD",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "AOCDL",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "AOCC",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "AOCCL",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "ASCD",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "ASCDL",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "OTC",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "OTD",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "CUVC",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "DCOT",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "OTF",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "HWDF",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "PTO",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "CTO",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "OC",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "CHGC",
+     "lo": 23,
+     "hi": 23,
+     "type": "bool"
+    },
+    {
+     "name": "CHGV",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    },
+    {
+     "name": "PCHGC",
+     "lo": 25,
+     "hi": 25,
+     "type": "bool"
+    },
+    {
+     "name": "UTC",
+     "lo": 26,
+     "hi": 26,
+     "type": "bool"
+    },
+    {
+     "name": "UTD",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "COVL",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "OCDL",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 81
+  },
+  {
+   "name": "mac_pf_alert",
+   "address": 4477440,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "SUV",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "SOV",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "SOCC",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "SOCD",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "SOT",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "SOTF",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "QIM",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "CB",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "IMP",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "CD",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "VIMR",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "VIMA",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "AOCDL",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "AOCCL",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "ASCDL",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "CFETF",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "DFETF",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "OCDL",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "FUSE",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "AFER",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "AFEC",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "SECOND_LVL",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "TMPC",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "TS1",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "TS2",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    },
+    {
+     "name": "TS3",
+     "lo": 30,
+     "hi": 30,
+     "type": "bool"
+    },
+    {
+     "name": "TS4",
+     "lo": 31,
+     "hi": 31,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 82
+  },
+  {
+   "name": "mac_pf_status",
+   "address": 4477696,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "SUV",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "SOV",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "SOCC",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "SOCD",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "SOT",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "COVL",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "SOTF",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "QIM",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "CB",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "IMP",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "CD",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "VIMR",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "VIMA",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "AOCDL",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "AOCCL",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "ASCDL",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "CFETF",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "DFETF",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "OCDL",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "FUSE",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "AFER",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "AFEC",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "SECOND_LVL",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "TMPC",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "TS1",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "TS2",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    },
+    {
+     "name": "TS3",
+     "lo": 30,
+     "hi": 30,
+     "type": "bool"
+    },
+    {
+     "name": "TS4",
+     "lo": 31,
+     "hi": 31,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 83
+  },
+  {
+   "name": "mac_operation_status",
+   "address": 4477952,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "PRES",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "DSG",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "CHG",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "PCHG",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "ACTHR",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "FUSE",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "EMSHUT",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "BTP_INT",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "SEC",
+     "lo": 8,
+     "hi": 9,
+     "type": "uint",
+     "enum": {
+      "0": "Reserved",
+      "1": "FullAccess",
+      "2": "UnSealed",
+      "3": "Sealed"
+     }
+    },
+    {
+     "name": "SDV",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "SS",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "PF",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "XDSG",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "XCHG",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "SLEEP",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "SDM",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "LED",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "AUTH",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "AUTOCALM",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "CAL",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "CAL_OFFSET",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "XL",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "SLEEPM",
+     "lo": 23,
+     "hi": 23,
+     "type": "bool"
+    },
+    {
+     "name": "INIT",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    },
+    {
+     "name": "SMBLCAL",
+     "lo": 25,
+     "hi": 25,
+     "type": "bool"
+    },
+    {
+     "name": "STORAGEM",
+     "lo": 26,
+     "hi": 26,
+     "type": "bool"
+    },
+    {
+     "name": "CB",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "DISCONN",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    },
+    {
+     "name": "PSSHUT",
+     "lo": 30,
+     "hi": 30,
+     "type": "bool"
+    },
+    {
+     "name": "IOSHUT",
+     "lo": 31,
+     "hi": 31,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 84
+  },
+  {
+   "name": "mac_charging_status",
+   "address": 4478208,
+   "access": "RW",
+   "size": 5,
+   "doc": "",
+   "fields": [
+    {
+     "name": "UT",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "LT",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "STL",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "RT",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "STH",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "HT",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "OT",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "PV",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "LV",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "MV",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "HV",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "CHG_IN",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "CHG_SU",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "MCHG",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "VCT",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "CCR",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "CVR",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "CCC",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "NCT",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "ERM",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "ERETM",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "DEG",
+     "lo": 22,
+     "hi": 23,
+     "type": "uint",
+     "enum": {
+      "0": "NoDegradation",
+      "1": "CycleCountBased",
+      "2": "SohBased",
+      "3": "RuntimeBased"
+     }
+    },
+    {
+     "name": "V_PV",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    },
+    {
+     "name": "V_LV",
+     "lo": 25,
+     "hi": 25,
+     "type": "bool"
+    },
+    {
+     "name": "V_MV",
+     "lo": 26,
+     "hi": 26,
+     "type": "bool"
+    },
+    {
+     "name": "V_HV",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "V_IN",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "V_SU",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    },
+    {
+     "name": "V_MCHG",
+     "lo": 30,
+     "hi": 30,
+     "type": "bool"
+    },
+    {
+     "name": "V_VCT",
+     "lo": 31,
+     "hi": 31,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_PV",
+     "lo": 32,
+     "hi": 32,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_LV",
+     "lo": 33,
+     "hi": 33,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_MV",
+     "lo": 34,
+     "hi": 34,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_HV",
+     "lo": 35,
+     "hi": 35,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_IN",
+     "lo": 36,
+     "hi": 36,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_SU",
+     "lo": 37,
+     "hi": 37,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_MCHG",
+     "lo": 38,
+     "hi": 38,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_VCT",
+     "lo": 39,
+     "hi": 39,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 85
+  },
+  {
+   "name": "mac_gauging_status",
+   "address": 4478464,
+   "access": "RW",
+   "size": 6,
+   "doc": "",
+   "fields": [
+    {
+     "name": "FD",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "FC",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "TD",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "TC",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "BAL_EN",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "EDV",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "DSG",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "CF",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "REST",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "R_DIS",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "VOK",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "QEN",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "SLPQMAX",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "OCVPRED",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "NSFM",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "VDQ",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "QMAX",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "RX",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "LDMD",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "OCVFR",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "VLB",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "PERF_MODE",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 86
+  },
+  {
+   "name": "mac_manufacturing_status",
+   "address": 4478720,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "PCHG_EN",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "CHG_EN",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "DSG_EN",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "GAUGE_EN",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "FET_EN",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "LF_EN",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "PF_EN",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "BBR_EN",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "FUSE_EN",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "LED_EN",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "LT_TEST",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "CAL_EN",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 87
+  },
+  {
+   "name": "mac_afe_reg",
+   "address": 4478976,
+   "access": "RW",
+   "size": 6,
+   "doc": "",
+   "fields": [
+    {
+     "name": "AFE_INT_STATUS",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_FET_STATUS",
+     "lo": 8,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_RXIN",
+     "lo": 16,
+     "hi": 23,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_LATCH_STATUS",
+     "lo": 24,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_INT_EN",
+     "lo": 32,
+     "hi": 39,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_CTRL",
+     "lo": 40,
+     "hi": 47,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 88
+  },
+  {
+   "name": "no_load_rem_cap",
+   "address": 4479488,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "REMAINING_CAPACITY",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 90
+  },
+  {
+   "name": "mac_lifetime_data_block_1",
+   "address": 4481024,
+   "access": "RW",
+   "size": 26,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CELL_1_MAX_V",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_2_MAX_V",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_3_MAX_V",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_4_MAX_V",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_1_MIN_V",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_2_MIN_V",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_3_MIN_V",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_4_MIN_V",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_DELTA_CELL_V",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_CHARGE_A",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_DISCHARGE_A",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_AVG_DISCHARGE_A",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_AVG_DISCHARGE_PWR",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 96
+  },
+  {
+   "name": "mac_lifetime_data_block_2",
+   "address": 4481280,
+   "access": "RW",
+   "size": 20,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MIN_FCC_SOH_MAH",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_FCC_SOH_CWH",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_CELL_1",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_CELL_2",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_CELL_3",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_CELL_4",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 97
+  },
+  {
+   "name": "mac_lifetime_data_block_3",
+   "address": 4481536,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TOTAL_FW_RUNTIME",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 98
+  },
+  {
+   "name": "mac_lifetime_data_block_4",
+   "address": 4481792,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "NUM_COV_EVENTS",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_COV_EVENT",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_CUV_EVENTS",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_CUV_EVENT",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OCD1_EVENT",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OCD1_EVENT",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OCD2_EVENTS",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OCD2_EVENT",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OCC1_EVENTS",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OCC1_EVENT",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OCC2_EVENTS",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OCC2_EVENT",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_AOLD_EVENTS",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_AOLD_EVENT",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_ASCD_EVENTS",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_ASCD_EVENT",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 99
+  },
+  {
+   "name": "mac_lifetime_data_block_5",
+   "address": 4482048,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "NUM_ASCC_EVENTS",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_ASCC_EVENT",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OTC_EVENTS",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OTC_EVENT",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OTD_EVENT",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OTD_EVENT",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OTF_EVENTS",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OTF_EVENT",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_VALID_CHG_TERM",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_VALID_CHG_TERM",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_QMAX_UPDATES",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_QMAX_UPDATE",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_RA_UPDATES",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_RA_UPDATE",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_RA_DISABLE",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_RA_DISABLE",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 100
+  },
+  {
+   "name": "mac_lifetime_data_block_6",
+   "address": 4482304,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_UT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 101
+  },
+  {
+   "name": "mac_lifetime_data_block_7",
+   "address": 4482560,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_LT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 102
+  },
+  {
+   "name": "mac_lifetime_data_block_8",
+   "address": 4482816,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_STL_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 103
+  },
+  {
+   "name": "mac_lifetime_data_block_9",
+   "address": 4483072,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_RT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_RT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_RT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_RT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_RT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_RT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_RT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_RT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 104
+  },
+  {
+   "name": "mac_lifetime_data_block_10",
+   "address": 4483328,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_STH_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STH_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STH_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STH_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STH_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STH_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STH_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STH_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 105
+  },
+  {
+   "name": "mac_lifetime_data_block_11",
+   "address": 4483584,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_HT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 106
+  },
+  {
+   "name": "mac_lifetime_data_block_12",
+   "address": 4483840,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_OT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 107
+  },
+  {
+   "name": "mac_lifetime_data_block_13",
+   "address": 4484096,
+   "access": "RW",
+   "size": 30,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MAX_TEMP_CELL_RELAX",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_CELL_RELAX",
+     "lo": 8,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_DELTA_TEMP_CELL_RELAX",
+     "lo": 16,
+     "hi": 23,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_INT_RELAX",
+     "lo": 24,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_INT_RELAX",
+     "lo": 32,
+     "hi": 39,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_FET_RELAX",
+     "lo": 40,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS1_RELAX",
+     "lo": 48,
+     "hi": 55,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS2_RELAX",
+     "lo": 56,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS3_RELAX",
+     "lo": 64,
+     "hi": 71,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS4_RELAX",
+     "lo": 72,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS1_RELAX",
+     "lo": 80,
+     "hi": 87,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS2_RELAX",
+     "lo": 88,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS3_RELAX",
+     "lo": 96,
+     "hi": 103,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS4_RELAX",
+     "lo": 104,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_1_RELAX",
+     "lo": 112,
+     "hi": 119,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_2_RELAX",
+     "lo": 120,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_3_RELAX",
+     "lo": 128,
+     "hi": 135,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_4_RELAX",
+     "lo": 136,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_5_RELAX",
+     "lo": 144,
+     "hi": 151,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_6_RELAX",
+     "lo": 152,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_7_RELAX",
+     "lo": 160,
+     "hi": 167,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_8_RELAX",
+     "lo": 168,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_1_RELAX",
+     "lo": 176,
+     "hi": 183,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_2_RELAX",
+     "lo": 184,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_3_RELAX",
+     "lo": 192,
+     "hi": 199,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_4_RELAX",
+     "lo": 200,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_5_RELAX",
+     "lo": 208,
+     "hi": 215,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_6_RELAX",
+     "lo": 216,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_7_RELAX",
+     "lo": 224,
+     "hi": 231,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_8_RELAX",
+     "lo": 232,
+     "hi": 239,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 108
+  },
+  {
+   "name": "mac_lifetime_data_block_14",
+   "address": 4484352,
+   "access": "RW",
+   "size": 30,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MAX_TEMP_CELL_CHARGE",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_CELL_CHARGE",
+     "lo": 8,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_DELTA_TEMP_CELL_CHARGE",
+     "lo": 16,
+     "hi": 23,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_INT_CHARGE",
+     "lo": 24,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_INT_CHARGE",
+     "lo": 32,
+     "hi": 39,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_FET_CHARGE",
+     "lo": 40,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS1_CHARGE",
+     "lo": 48,
+     "hi": 55,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS2_CHARGE",
+     "lo": 56,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS3_CHARGE",
+     "lo": 64,
+     "hi": 71,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS4_CHARGE",
+     "lo": 72,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS1_CHARGE",
+     "lo": 80,
+     "hi": 87,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS2_CHARGE",
+     "lo": 88,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS3_CHARGE",
+     "lo": 96,
+     "hi": 103,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS4_CHARGE",
+     "lo": 104,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_1_CHARGE",
+     "lo": 112,
+     "hi": 119,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_2_CHARGE",
+     "lo": 120,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_3_CHARGE",
+     "lo": 128,
+     "hi": 135,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_4_CHARGE",
+     "lo": 136,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_5_CHARGE",
+     "lo": 144,
+     "hi": 151,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_6_CHARGE",
+     "lo": 152,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_7_CHARGE",
+     "lo": 160,
+     "hi": 167,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_8_CHARGE",
+     "lo": 168,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_1_CHARGE",
+     "lo": 176,
+     "hi": 183,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_2_CHARGE",
+     "lo": 184,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_3_CHARGE",
+     "lo": 192,
+     "hi": 199,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_4_CHARGE",
+     "lo": 200,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_5_CHARGE",
+     "lo": 208,
+     "hi": 215,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_6_CHARGE",
+     "lo": 216,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_7_CHARGE",
+     "lo": 224,
+     "hi": 231,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_8_CHARGE",
+     "lo": 232,
+     "hi": 239,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 109
+  },
+  {
+   "name": "mac_lifetime_data_block_15",
+   "address": 4484608,
+   "access": "RW",
+   "size": 30,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MAX_TEMP_CELL_DISCHARGE",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_CELL_DISCHARGE",
+     "lo": 8,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_DELTA_TEMP_CELL_DISCHARGE",
+     "lo": 16,
+     "hi": 23,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_INT_DISCHARGE",
+     "lo": 24,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_INT_DISCHARGE",
+     "lo": 32,
+     "hi": 39,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_FET_DISCHARGE",
+     "lo": 40,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS1_DISCHARGE",
+     "lo": 48,
+     "hi": 55,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS2_DISCHARGE",
+     "lo": 56,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS3_DISCHARGE",
+     "lo": 64,
+     "hi": 71,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TS4_DISCHARGE",
+     "lo": 72,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS1_DISCHARGE",
+     "lo": 80,
+     "hi": 87,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS2_DISCHARGE",
+     "lo": 88,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS3_DISCHARGE",
+     "lo": 96,
+     "hi": 103,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TS4_DISCHARGE",
+     "lo": 104,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_1_DISCHARGE",
+     "lo": 112,
+     "hi": 119,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_2_DISCHARGE",
+     "lo": 120,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_3_DISCHARGE",
+     "lo": 128,
+     "hi": 135,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_4_DISCHARGE",
+     "lo": 136,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_5_DISCHARGE",
+     "lo": 144,
+     "hi": 151,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_6_DISCHARGE",
+     "lo": 152,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_7_DISCHARGE",
+     "lo": 160,
+     "hi": 167,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_TEMP_TMP468_8_DISCHARGE",
+     "lo": 168,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_1_DISCHARGE",
+     "lo": 176,
+     "hi": 183,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_2_DISCHARGE",
+     "lo": 184,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_3_DISCHARGE",
+     "lo": 192,
+     "hi": 199,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_4_DISCHARGE",
+     "lo": 200,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_5_DISCHARGE",
+     "lo": 208,
+     "hi": 215,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_6_DISCHARGE",
+     "lo": 216,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_7_DISCHARGE",
+     "lo": 224,
+     "hi": 231,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_TEMP_TMP468_8_DISCHARGE",
+     "lo": 232,
+     "hi": 239,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 110
+  },
+  {
+   "name": "mac_power_events",
+   "address": 4484864,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "NUM_SHUTDOWNS",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_PART_RESETS",
+     "lo": 8,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_FULL_RESETS",
+     "lo": 16,
+     "hi": 23,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_WDT_RESETS",
+     "lo": 24,
+     "hi": 31,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 111
+  },
+  {
+   "name": "mac_manufacture_info",
+   "address": 4485120,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MANUFACTURE_INFO_0",
+     "lo": 0,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "MANUFACTURE_INFO_1",
+     "lo": 64,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "MANUFACTURE_INFO_2",
+     "lo": 128,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "MANUFACTURE_INFO_3",
+     "lo": 192,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 112
+  },
+  {
+   "name": "mac_da_status_1",
+   "address": 4485376,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CELL_VOLTAGE_1",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_2",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_3",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_4",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "BAT_VOLTAGE",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "PACK_VOLTAGE",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_1",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_2",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_3",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_4",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_PWR_1",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_PWR_2",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_PWR_3",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_PWR_4",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TOTAL_PWR",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "AVG_PWR",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 113
+  },
+  {
+   "name": "mac_da_status_2",
+   "address": 4485632,
+   "access": "RW",
+   "size": 26,
+   "doc": "",
+   "fields": [
+    {
+     "name": "INT_TEMP",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "TS1_TEMP",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TS2_TEMP",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "TS3_TEMP",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TS4_TEMP",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_TEMP",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "FET_TEMP",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "GAUGING_TEMP",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "USER_TEMP",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "UNCOMP_CELL_V_1",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "UNCOMP_CELL_V_2",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "UNCOMP_CELL_V_3",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "UNCOMP_CELL_V_4",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 114
+  },
+  {
+   "name": "mac_gauge_status_1",
+   "address": 4485888,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TRUE_REM_Q",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "TRUE_REM_E",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "INITIAL_Q",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "INITIAL_E",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TRUE_FCC_Q",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "TRUE_FCC_E",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "T_SIM",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "T_AMBIENT",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "RA_SCALE_0",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "RA_SCALE_1",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "RA_SCALE_2",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "RA_SCALE_3",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "COMP_RES_0",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "COMP_RES_1",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "COMP_RES_2",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "COMP_RES_3",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 115
+  },
+  {
+   "name": "mac_gauge_status_2",
+   "address": 4486144,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "PACK_GRID",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "Q_MAX_STATUS",
+     "lo": 8,
+     "hi": 9,
+     "type": "uint",
+     "enum": {
+      "0": "BattOK",
+      "1": "QMaxUpdated",
+      "2": "QMaxRTableUpdated",
+      "3": "Reserved"
+     }
+    },
+    {
+     "name": "ITEN",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "QMAX_FIELD_UPDATED",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "CELL_GRID_0",
+     "lo": 16,
+     "hi": 23,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_GRID_1",
+     "lo": 24,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_GRID_2",
+     "lo": 32,
+     "hi": 39,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_GRID_3",
+     "lo": 40,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "STATE_TIME",
+     "lo": 48,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_0",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_1",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_2",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_3",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_PASSED_Q",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_PASSED_E",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_TIME",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "DODEOC_0",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "DODEOC_1",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "DODEOC_2",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "DODEOC_3",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 116
+  },
+  {
+   "name": "mac_gauge_status_3",
+   "address": 4486400,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "QMAX_0",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_1",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_2",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_3",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_DOD0_0",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_DOD0_1",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_DOD0_2",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_DOD0_3",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_PASSED_Q",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_TIME",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TEMP_K_FACTOR",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "TEMP_A_FACTOR",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 117
+  },
+  {
+   "name": "mac_cb_status",
+   "address": 4486656,
+   "access": "RW",
+   "size": 20,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CB_TIME_0",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_1",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_2",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_3",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_1_BALANCE_DOD",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_2_BALANCE_DOD",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_3_BALANCE_DOD",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_4_BALANCE_DOD",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TOTAL_DOD_CHRG",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_BALANCE_STAT",
+     "lo": 144,
+     "hi": 151,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 118
+  },
+  {
+   "name": "mac_state_of_health",
+   "address": 4486912,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "SOH_FCC",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "SOH_ENERGY",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 119
+  },
+  {
+   "name": "mac_filter_capacity",
+   "address": 4487168,
+   "access": "RW",
+   "size": 8,
+   "doc": "",
+   "fields": [
+    {
+     "name": "FILT_REM_CAP",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "FILT_REM_ENERGY",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "FILT_FULL_CHG_CAP",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "FILT_FULL_CHG_ENERGY",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 120
+  },
+  {
+   "name": "mac_manufacture_info_b",
+   "address": 4487680,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MANUFACTURE_INFO_B_0",
+     "lo": 0,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "MANUFACTURE_INFO_B_1",
+     "lo": 64,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "MANUFACTURE_INFO_B_2",
+     "lo": 128,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "MANUFACTURE_INFO_B_3",
+     "lo": 192,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 122
+  },
+  {
+   "name": "mac_lifetime_data_block_16",
+   "address": 4488704,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_LFT_UUT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LFT_UUT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LFT_UUT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LFT_UUT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LFT_UUT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LFT_UUT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LFT_UUT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LFT_UUT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "mac": 126
+  },
+  {
+   "name": "mac_rom_mode",
+   "address": 4456463,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 3840
+  },
+  {
+   "name": "mac_exit_calibration_output_mode",
+   "address": 4489456,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 61568
+  },
+  {
+   "name": "mac_stop_output_ccadc_cal",
+   "address": 4489712,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 61569
+  },
+  {
+   "name": "mac_output_ccadc_cal",
+   "address": 4489712,
+   "access": "RW",
+   "size": 24,
+   "doc": "",
+   "fields": [
+    {
+     "name": "REFRESH_CTR",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "STATUS",
+     "lo": 8,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "CURRENT",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_1",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_2",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_3",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_4",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "PACK_VOLTAGE",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "BAT_VOLTAGE",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_1",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_2",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_3",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_4",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": true,
+   "mac": 61569
+  },
+  {
+   "name": "mac_stop_output_shorted_ccadc_cal",
+   "address": 4489968,
+   "access": "RW",
+   "size": null,
+   "doc": "",
+   "fields": [],
+   "kind": "action",
+   "disruptive": true,
+   "sideEffects": false,
+   "mac": 61570
+  },
+  {
+   "name": "mac_output_shorted_ccadc_cal",
+   "address": 4489968,
+   "access": "RW",
+   "size": 24,
+   "doc": "",
+   "fields": [
+    {
+     "name": "REFRESH_CTR",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "STATUS",
+     "lo": 8,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "CURRENT",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_1",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_2",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_3",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_4",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "PACK_VOLTAGE",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "BAT_VOLTAGE",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_1",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_2",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_3",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_4",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": true,
+   "sideEffects": true,
+   "mac": 61570
+  },
+  {
+   "name": "safety_alert",
+   "address": 5242880,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CUV",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "COV",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "OCC1",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "OCC2",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "OCD1",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "OCD2",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "AOCDL",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "AOCCL",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "ASCDL",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "OTC",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "OTD",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "CUVC",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "DCOT",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "OTF",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "PTO",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "PTOS",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "CTO",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "CTOS",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "OC",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "CHGC",
+     "lo": 23,
+     "hi": 23,
+     "type": "bool"
+    },
+    {
+     "name": "CHGV",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    },
+    {
+     "name": "PCHGC",
+     "lo": 25,
+     "hi": 25,
+     "type": "bool"
+    },
+    {
+     "name": "UTC",
+     "lo": 26,
+     "hi": 26,
+     "type": "bool"
+    },
+    {
+     "name": "UTD",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "COVL",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "OCDL",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 80
+  },
+  {
+   "name": "safety_status",
+   "address": 5308416,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CUV",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "COV",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "OCC1",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "OCC2",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "OCD1",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "OCD2",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "AOCD",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "AOCDL",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "AOCC",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "AOCCL",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "ASCD",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "ASCDL",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "OTC",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "OTD",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "CUVC",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "DCOT",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "OTF",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "HWDF",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "PTO",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "CTO",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "OC",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "CHGC",
+     "lo": 23,
+     "hi": 23,
+     "type": "bool"
+    },
+    {
+     "name": "CHGV",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    },
+    {
+     "name": "PCHGC",
+     "lo": 25,
+     "hi": 25,
+     "type": "bool"
+    },
+    {
+     "name": "UTC",
+     "lo": 26,
+     "hi": 26,
+     "type": "bool"
+    },
+    {
+     "name": "UTD",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "COVL",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "OCDL",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 81
+  },
+  {
+   "name": "pf_alert",
+   "address": 5373952,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "SUV",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "SOV",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "SOCC",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "SOCD",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "SOT",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "COVL",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "SOTF",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "QIM",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "CB",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "IMP",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "CD",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "VIMR",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "VIMA",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "AOCDL",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "AOCCL",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "ASCDL",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "CFETF",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "DFETF",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "OCDL",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "FUSE",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "AFER",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "AFEC",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "SECOND_LVL",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "TMPC",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "TS1",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "TS2",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    },
+    {
+     "name": "TS3",
+     "lo": 30,
+     "hi": 30,
+     "type": "bool"
+    },
+    {
+     "name": "TS4",
+     "lo": 31,
+     "hi": 31,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 82
+  },
+  {
+   "name": "pf_status",
+   "address": 5439488,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "SUV",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "SOV",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "SOCC",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "SOCD",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "SOT",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "COVL",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "SOTF",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "QIM",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "CB",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "IMP",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "CD",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "VIMR",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "VIMA",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "AOCDL",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "AOCCL",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "ASCDL",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "CFETF",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "DFETF",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "OCDL",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "FUSE",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "AFER",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "AFEC",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "SECOND_LVL",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "NTC",
+     "lo": 23,
+     "hi": 23,
+     "type": "bool"
+    },
+    {
+     "name": "FORCE",
+     "lo": 25,
+     "hi": 25,
+     "type": "bool"
+    },
+    {
+     "name": "DFW",
+     "lo": 26,
+     "hi": 26,
+     "type": "bool"
+    },
+    {
+     "name": "TMPC",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "TS1",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "TS2",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    },
+    {
+     "name": "TS3",
+     "lo": 30,
+     "hi": 30,
+     "type": "bool"
+    },
+    {
+     "name": "TS4",
+     "lo": 31,
+     "hi": 31,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 83
+  },
+  {
+   "name": "operation_status",
+   "address": 5505024,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "PRES",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "DSG",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "CHG",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "PCHG",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "ACTHR",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "FUSE",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "EMSHUT",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "BTP_INT",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "SEC",
+     "lo": 8,
+     "hi": 9,
+     "type": "uint",
+     "enum": {
+      "0": "Reserved",
+      "1": "FullAccess",
+      "2": "UnSealed",
+      "3": "Sealed"
+     }
+    },
+    {
+     "name": "SDV",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "SS",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "PF",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "XDSG",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "XCHG",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "SLEEP",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "SDM",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "LED",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "AUTH",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "AUTOCALM",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "CAL",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "CAL_OFFSET",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "XL",
+     "lo": 22,
+     "hi": 22,
+     "type": "bool"
+    },
+    {
+     "name": "SLEEPM",
+     "lo": 23,
+     "hi": 23,
+     "type": "bool"
+    },
+    {
+     "name": "INIT",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    },
+    {
+     "name": "SMBLCAL",
+     "lo": 25,
+     "hi": 25,
+     "type": "bool"
+    },
+    {
+     "name": "STORAGEM",
+     "lo": 26,
+     "hi": 26,
+     "type": "bool"
+    },
+    {
+     "name": "CB",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "DISCONN",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    },
+    {
+     "name": "PSSHUT",
+     "lo": 30,
+     "hi": 30,
+     "type": "bool"
+    },
+    {
+     "name": "IOSHUT",
+     "lo": 31,
+     "hi": 31,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 84
+  },
+  {
+   "name": "charging_status",
+   "address": 5570560,
+   "access": "RW",
+   "size": 5,
+   "doc": "",
+   "fields": [
+    {
+     "name": "UT",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "LT",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "STL",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "RT",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "STH",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "HT",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "OT",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "PV",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "LV",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "MV",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "HV",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "CHG_IN",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "CHG_SU",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "MCHG",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "VCT",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "CCR",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "CVR",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "CCC",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "NCT",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "ERM",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "ERETM",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "DEG",
+     "lo": 22,
+     "hi": 23,
+     "type": "uint",
+     "enum": {
+      "0": "NoDegradation",
+      "1": "CycleCountBased",
+      "2": "SohBased",
+      "3": "RuntimeBased"
+     }
+    },
+    {
+     "name": "V_PV",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    },
+    {
+     "name": "V_LV",
+     "lo": 25,
+     "hi": 25,
+     "type": "bool"
+    },
+    {
+     "name": "V_MV",
+     "lo": 26,
+     "hi": 26,
+     "type": "bool"
+    },
+    {
+     "name": "V_HV",
+     "lo": 27,
+     "hi": 27,
+     "type": "bool"
+    },
+    {
+     "name": "V_IN",
+     "lo": 28,
+     "hi": 28,
+     "type": "bool"
+    },
+    {
+     "name": "V_SU",
+     "lo": 29,
+     "hi": 29,
+     "type": "bool"
+    },
+    {
+     "name": "V_MCHG",
+     "lo": 30,
+     "hi": 30,
+     "type": "bool"
+    },
+    {
+     "name": "V_VCT",
+     "lo": 31,
+     "hi": 31,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_PV",
+     "lo": 32,
+     "hi": 32,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_LV",
+     "lo": 33,
+     "hi": 33,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_MV",
+     "lo": 34,
+     "hi": 34,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_HV",
+     "lo": 35,
+     "hi": 35,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_IN",
+     "lo": 36,
+     "hi": 36,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_SU",
+     "lo": 37,
+     "hi": 37,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_MCHG",
+     "lo": 38,
+     "hi": 38,
+     "type": "bool"
+    },
+    {
+     "name": "SOC_VCT",
+     "lo": 39,
+     "hi": 39,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 85
+  },
+  {
+   "name": "gauging_status",
+   "address": 5636096,
+   "access": "RW",
+   "size": 6,
+   "doc": "",
+   "fields": [
+    {
+     "name": "FD",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "FC",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "TD",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "TC",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "BAL_EN",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "EDV",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "DSG",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "CF",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "REST",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "R_DIS",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "VOK",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "QEN",
+     "lo": 12,
+     "hi": 12,
+     "type": "bool"
+    },
+    {
+     "name": "SLPQMAX",
+     "lo": 13,
+     "hi": 13,
+     "type": "bool"
+    },
+    {
+     "name": "OCVPRED",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "NSFM",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    },
+    {
+     "name": "VDQ",
+     "lo": 16,
+     "hi": 16,
+     "type": "bool"
+    },
+    {
+     "name": "QMAX",
+     "lo": 17,
+     "hi": 17,
+     "type": "bool"
+    },
+    {
+     "name": "RX",
+     "lo": 18,
+     "hi": 18,
+     "type": "bool"
+    },
+    {
+     "name": "LDMD",
+     "lo": 19,
+     "hi": 19,
+     "type": "bool"
+    },
+    {
+     "name": "OCVFR",
+     "lo": 20,
+     "hi": 20,
+     "type": "bool"
+    },
+    {
+     "name": "VLB",
+     "lo": 21,
+     "hi": 21,
+     "type": "bool"
+    },
+    {
+     "name": "PERF_MODE",
+     "lo": 24,
+     "hi": 24,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 86
+  },
+  {
+   "name": "manufacturing_status",
+   "address": 5701632,
+   "access": "RW",
+   "size": 2,
+   "doc": "",
+   "fields": [
+    {
+     "name": "PCHG_EN",
+     "lo": 0,
+     "hi": 0,
+     "type": "bool"
+    },
+    {
+     "name": "CHG_EN",
+     "lo": 1,
+     "hi": 1,
+     "type": "bool"
+    },
+    {
+     "name": "DSG_EN",
+     "lo": 2,
+     "hi": 2,
+     "type": "bool"
+    },
+    {
+     "name": "GAUGE_EN",
+     "lo": 3,
+     "hi": 3,
+     "type": "bool"
+    },
+    {
+     "name": "FET_EN",
+     "lo": 4,
+     "hi": 4,
+     "type": "bool"
+    },
+    {
+     "name": "LF_EN",
+     "lo": 5,
+     "hi": 5,
+     "type": "bool"
+    },
+    {
+     "name": "PF_EN",
+     "lo": 6,
+     "hi": 6,
+     "type": "bool"
+    },
+    {
+     "name": "BBR_EN",
+     "lo": 7,
+     "hi": 7,
+     "type": "bool"
+    },
+    {
+     "name": "FUSE_EN",
+     "lo": 8,
+     "hi": 8,
+     "type": "bool"
+    },
+    {
+     "name": "LED_EN",
+     "lo": 9,
+     "hi": 9,
+     "type": "bool"
+    },
+    {
+     "name": "LT_TEST",
+     "lo": 14,
+     "hi": 14,
+     "type": "bool"
+    },
+    {
+     "name": "CAL_EN",
+     "lo": 15,
+     "hi": 15,
+     "type": "bool"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 87
+  },
+  {
+   "name": "afe_reg",
+   "address": 5767168,
+   "access": "RW",
+   "size": 6,
+   "doc": "",
+   "fields": [
+    {
+     "name": "AFE_INT_STATUS",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_FET_STATUS",
+     "lo": 8,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_RXIN",
+     "lo": 16,
+     "hi": 23,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_LATCH_STATUS",
+     "lo": 24,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_INT_EN",
+     "lo": 32,
+     "hi": 39,
+     "type": "uint"
+    },
+    {
+     "name": "AFE_CTRL",
+     "lo": 40,
+     "hi": 47,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 88
+  },
+  {
+   "name": "lifetime_data_block_1",
+   "address": 6291456,
+   "access": "RW",
+   "size": 26,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CELL_1_MAX_V",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_2_MAX_V",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_3_MAX_V",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_4_MAX_V",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_1_MIN_V",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_2_MIN_V",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_3_MIN_V",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_4_MIN_V",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_DELTA_CELL_V",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_CHARGE_A",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_DISCHARGE_A",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_AVG_DISCHARGE_A",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "MAX_AVG_DISCHARGE_PWR",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 96
+  },
+  {
+   "name": "lifetime_data_block_2",
+   "address": 6356992,
+   "access": "RW",
+   "size": 20,
+   "doc": "",
+   "fields": [
+    {
+     "name": "MIN_FCC_SOH_MAH",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "MIN_FCC_SOH_CWH",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_CELL_1",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_CELL_2",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_CELL_3",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_CELL_4",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 97
+  },
+  {
+   "name": "lifetime_data_block_3",
+   "address": 6422528,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TOTAL_FW_RUNTIME",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 98
+  },
+  {
+   "name": "lifetime_data_block_4",
+   "address": 6488064,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "NUM_COV_EVENTS",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_COV_EVENT",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_CUV_EVENTS",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_CUV_EVENT",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OCD1_EVENT",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OCD1_EVENT",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OCD2_EVENTS",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OCD2_EVENT",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OCC1_EVENTS",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OCC1_EVENT",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OCC2_EVENTS",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OCC2_EVENT",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_AOLD_EVENTS",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_AOLD_EVENT",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_ASCD_EVENTS",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_ASCD_EVENT",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 99
+  },
+  {
+   "name": "lifetime_data_block_5",
+   "address": 6553600,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "NUM_ASCC_EVENTS",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_ASCC_EVENT",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OTC_EVENTS",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OTC_EVENT",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OTD_EVENT",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OTD_EVENT",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_OTF_EVENTS",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_OTF_EVENT",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_VALID_CHG_TERM",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_VALID_CHG_TERM",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_QMAX_UPDATES",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_QMAX_UPDATE",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_RA_UPDATES",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_RA_UPDATE",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "NUM_RA_DISABLE",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "LAST_RA_DISABLE",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 100
+  },
+  {
+   "name": "lifetime_data_block_6",
+   "address": 6619136,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_UT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_UT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 101
+  },
+  {
+   "name": "lifetime_data_block_7",
+   "address": 6684672,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_LT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_LT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 102
+  },
+  {
+   "name": "lifetime_data_block_8",
+   "address": 6750208,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_STL_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_STL_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 103
+  },
+  {
+   "name": "lifetime_data_block_11",
+   "address": 6946816,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_HT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_HT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 106
+  },
+  {
+   "name": "lifetime_data_block_12",
+   "address": 7012352,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TIME_SPENT_OT_RSOC_A",
+     "lo": 0,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_B",
+     "lo": 32,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_C",
+     "lo": 64,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_D",
+     "lo": 96,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_E",
+     "lo": 128,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_F",
+     "lo": 160,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_G",
+     "lo": 192,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TIME_SPENT_OT_RSOC_H",
+     "lo": 224,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 107
+  },
+  {
+   "name": "da_status_1",
+   "address": 7405568,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CELL_VOLTAGE_1",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_2",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_3",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_VOLTAGE_4",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "BAT_VOLTAGE",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "PACK_VOLTAGE",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_1",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_2",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_3",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_CURRENT_4",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_PWR_1",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_PWR_2",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_PWR_3",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_PWR_4",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "TOTAL_PWR",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "AVG_PWR",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 113
+  },
+  {
+   "name": "da_status_2",
+   "address": 7471104,
+   "access": "RW",
+   "size": 26,
+   "doc": "",
+   "fields": [
+    {
+     "name": "INT_TEMP",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "TS1_TEMP",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "TS2_TEMP",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "TS3_TEMP",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TS4_TEMP",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_TEMP",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "FET_TEMP",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "GAUGING_TEMP",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "USER_TEMP",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "UNCOMP_CELL_V_1",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "UNCOMP_CELL_V_2",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "UNCOMP_CELL_V_3",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "UNCOMP_CELL_V_4",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 114
+  },
+  {
+   "name": "gauge_status_1",
+   "address": 7536640,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "TRUE_REM_Q",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "TRUE_REM_E",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "INITIAL_Q",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "INITIAL_E",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "TRUE_FCC_Q",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "TRUE_FCC_E",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "T_SIM",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "T_AMBIENT",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "RA_SCALE_0",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "RA_SCALE_1",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "RA_SCALE_2",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "RA_SCALE_3",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "COMP_RES_0",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "COMP_RES_1",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "COMP_RES_2",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "COMP_RES_3",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 115
+  },
+  {
+   "name": "gauge_status_2",
+   "address": 7602176,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "PACK_GRID",
+     "lo": 0,
+     "hi": 7,
+     "type": "uint"
+    },
+    {
+     "name": "Q_MAX_STATUS",
+     "lo": 8,
+     "hi": 9,
+     "type": "uint",
+     "enum": {
+      "0": "BattOK",
+      "1": "QMaxUpdated",
+      "2": "QMaxRTableUpdated",
+      "3": "Reserved"
+     }
+    },
+    {
+     "name": "ITEN",
+     "lo": 10,
+     "hi": 10,
+     "type": "bool"
+    },
+    {
+     "name": "QMAX_FIELD_UPDATED",
+     "lo": 11,
+     "hi": 11,
+     "type": "bool"
+    },
+    {
+     "name": "CELL_GRID_0",
+     "lo": 16,
+     "hi": 23,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_GRID_1",
+     "lo": 24,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_GRID_2",
+     "lo": 32,
+     "hi": 39,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_GRID_3",
+     "lo": 40,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "STATE_TIME",
+     "lo": 48,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_0",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_1",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_2",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_3",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_PASSED_Q",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_PASSED_E",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "DOD0_TIME",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    },
+    {
+     "name": "DODEOC_0",
+     "lo": 192,
+     "hi": 207,
+     "type": "uint"
+    },
+    {
+     "name": "DODEOC_1",
+     "lo": 208,
+     "hi": 223,
+     "type": "uint"
+    },
+    {
+     "name": "DODEOC_2",
+     "lo": 224,
+     "hi": 239,
+     "type": "uint"
+    },
+    {
+     "name": "DODEOC_3",
+     "lo": 240,
+     "hi": 255,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 116
+  },
+  {
+   "name": "gauge_status_3",
+   "address": 7667712,
+   "access": "RW",
+   "size": 32,
+   "doc": "",
+   "fields": [
+    {
+     "name": "QMAX_0",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_1",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_2",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_3",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_DOD0_0",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_DOD0_1",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_DOD0_2",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_DOD0_3",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_PASSED_Q",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "QMAX_TIME",
+     "lo": 144,
+     "hi": 159,
+     "type": "uint"
+    },
+    {
+     "name": "TEMP_K_FACTOR",
+     "lo": 160,
+     "hi": 175,
+     "type": "uint"
+    },
+    {
+     "name": "TEMP_A_FACTOR",
+     "lo": 176,
+     "hi": 191,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 117
+  },
+  {
+   "name": "cb_status",
+   "address": 7733248,
+   "access": "RW",
+   "size": 20,
+   "doc": "",
+   "fields": [
+    {
+     "name": "CB_TIME_0",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_1",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_2",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "CB_TIME_3",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_1_BALANCE_DOD",
+     "lo": 64,
+     "hi": 79,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_2_BALANCE_DOD",
+     "lo": 80,
+     "hi": 95,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_3_BALANCE_DOD",
+     "lo": 96,
+     "hi": 111,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_4_BALANCE_DOD",
+     "lo": 112,
+     "hi": 127,
+     "type": "uint"
+    },
+    {
+     "name": "TOTAL_DOD_CHRG",
+     "lo": 128,
+     "hi": 143,
+     "type": "uint"
+    },
+    {
+     "name": "CELL_BALANCE_STAT",
+     "lo": 144,
+     "hi": 151,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 118
+  },
+  {
+   "name": "state_of_health",
+   "address": 7798784,
+   "access": "RW",
+   "size": 4,
+   "doc": "",
+   "fields": [
+    {
+     "name": "SOH_FCC",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "SOH_ENERGY",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 119
+  },
+  {
+   "name": "filter_capacity",
+   "address": 7864320,
+   "access": "RW",
+   "size": 8,
+   "doc": "",
+   "fields": [
+    {
+     "name": "FILT_REM_CAP",
+     "lo": 0,
+     "hi": 15,
+     "type": "uint"
+    },
+    {
+     "name": "FILT_REM_ENERGY",
+     "lo": 16,
+     "hi": 31,
+     "type": "uint"
+    },
+    {
+     "name": "FILT_FULL_CHG_CAP",
+     "lo": 32,
+     "hi": 47,
+     "type": "uint"
+    },
+    {
+     "name": "FILT_FULL_CHG_ENERGY",
+     "lo": 48,
+     "hi": 63,
+     "type": "uint"
+    }
+   ],
+   "kind": "read",
+   "disruptive": false,
+   "sideEffects": false,
+   "sbs": 120
+  }
+ ],
+ "buffers": [
+  {
+   "name": "manufacture_name",
+   "address": 32,
+   "access": "RO",
+   "size": 33,
+   "doc": "",
+   "fields": []
+  },
+  {
+   "name": "device_name",
+   "address": 33,
+   "access": "RO",
+   "size": 33,
+   "doc": "",
+   "fields": []
+  },
+  {
+   "name": "device_chemistry",
+   "address": 34,
+   "access": "RO",
+   "size": 33,
+   "doc": "",
+   "fields": []
+  },
+  {
+   "name": "manufacturer_data",
+   "address": 35,
+   "access": "RO",
+   "size": 33,
+   "doc": "",
+   "fields": []
+  },
+  {
+   "name": "authenticate",
+   "address": 47,
+   "access": "RW",
+   "size": 33,
+   "doc": "",
+   "fields": []
+  }
+ ],
+ "helpers": [
+  {
+   "name": "temperature_fahrenheit",
+   "args": [],
+   "doc": "Temperature in \u00b0F (driver conversion)",
+   "disruptive": false
+  },
+  {
+   "name": "read_security_keys",
+   "args": [],
+   "doc": "Read the unseal / full-access keys (MAC 0x0035)",
+   "disruptive": false
+  },
+  {
+   "name": "write_security_keys",
+   "args": [
+    "keys: 8 bytes hex"
+   ],
+   "doc": "Write the unseal / full-access keys (MAC 0x0035)",
+   "disruptive": true
+  },
+  {
+   "name": "read_authentication_key",
+   "args": [],
+   "doc": "Read the SHA authentication key (MAC 0x0037)",
+   "disruptive": false
+  },
+  {
+   "name": "write_authentication_key",
+   "args": [
+    "key: 16 bytes hex"
+   ],
+   "doc": "Write the SHA authentication key (MAC 0x0037)",
+   "disruptive": true
+  },
+  {
+   "name": "seal_fg",
+   "args": [],
+   "doc": "Seal the gauge (MAC 0x0030)",
+   "disruptive": true
+  },
+  {
+   "name": "unseal_fg",
+   "args": [
+    "key_lower: u16",
+    "key_upper: u16"
+   ],
+   "doc": "Unseal with the unseal key",
+   "disruptive": false
+  },
+  {
+   "name": "send_access_key",
+   "args": [
+    "key_lower: u16",
+    "key_upper: u16"
+   ],
+   "doc": "Send an access key (unseal or full access)",
+   "disruptive": false
+  },
+  {
+   "name": "read_mfg_info",
+   "args": [],
+   "doc": "Read ManufacturerInfo (0x70)",
+   "disruptive": false
+  },
+  {
+   "name": "write_mfg_info",
+   "args": [
+    "data: up to 32 bytes hex"
+   ],
+   "doc": "Write ManufacturerInfo (0x70)",
+   "disruptive": true
+  },
+  {
+   "name": "read_mfg_info_c",
+   "args": [],
+   "doc": "Read ManufacturerInfoC (MAC 0x007B)",
+   "disruptive": false
+  },
+  {
+   "name": "write_mfg_info_c",
+   "args": [
+    "key_lower: u16",
+    "key_upper: u16",
+    "data: up to 32 bytes hex"
+   ],
+   "doc": "Write ManufacturerInfoC (MAC 0x007B)",
+   "disruptive": true
+  },
+  {
+   "name": "read_charging_voltage_override",
+   "args": [],
+   "doc": "Read the charging voltage override (MAC 0x00B0)",
+   "disruptive": false
+  },
+  {
+   "name": "write_charging_voltage_override",
+   "args": [
+    "low_temp_mv",
+    "std_low_temp_mv",
+    "std_hi_temp_mv",
+    "hi_temp_mv",
+    "recommended_temp_mv"
+   ],
+   "doc": "Write the charging voltage override (MAC 0x00B0)",
+   "disruptive": true
+  },
+  {
+   "name": "read_instruction_flash_signature",
+   "args": [],
+   "doc": "Instruction flash signature (MAC 0x0004, waits 0.5 s)",
+   "disruptive": false
+  },
+  {
+   "name": "read_static_df_signature",
+   "args": [],
+   "doc": "Static data flash signature (MAC 0x0005, waits 1 s)",
+   "disruptive": false
+  },
+  {
+   "name": "read_all_df_signature",
+   "args": [],
+   "doc": "All data flash signature (MAC 0x0009, waits 1 s)",
+   "disruptive": false
+  },
+  {
+   "name": "set_remaining_capacity_alarm",
+   "args": [
+    "value: u16"
+   ],
+   "doc": "SmartBattery::set_remaining_capacity_alarm (0x01)",
+   "disruptive": false
+  },
+  {
+   "name": "set_remaining_time_alarm",
+   "args": [
+    "minutes: u16"
+   ],
+   "doc": "SmartBattery::set_remaining_time_alarm (0x02)",
+   "disruptive": false
+  },
+  {
+   "name": "set_battery_mode",
+   "args": [
+    "flags: u16"
+   ],
+   "doc": "SmartBattery::set_battery_mode (0x03)",
+   "disruptive": true
+  },
+  {
+   "name": "set_at_rate",
+   "args": [
+    "value: i16"
+   ],
+   "doc": "SmartBattery::set_at_rate (0x04)",
+   "disruptive": false
+  }
+ ]
+}

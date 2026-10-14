@@ -6,14 +6,18 @@ edition = "2024"
 [dependencies]
 bq41z50                  = { path = "../bq41z50" }
 embedded-batteries-async = "0.3.4"
+embedded-hal             = "1.0"
 embedded-hal-async       = "1.0"
-embassy-rp       = { version = "0.3", features = ["rp235xa", "time-driver", "critical-section-impl"] }
-embassy-executor = { version = "0.7", features = ["arch-cortex-m", "executor-thread"] }
-embassy-time     = "0.4"
-embassy-usb      = "0.4"
-embassy-futures  = "0.1"
-cortex-m-rt      = "0.7"
-heapless         = "0.8"
+embassy-rp       = { version = "0.10.0", features = ["rp235xa", "time-driver", "critical-section-impl"] }
+embassy-executor = { version = "0.10.0", features = ["platform-cortex-m", "executor-thread"] }
+embassy-time     = "0.5.1"
+embassy-usb      = "0.6.0"
+embassy-futures  = "0.1.2"
+embassy-sync     = "0.8.0"
+cortex-m         = { version = "0.7.9", features = ["inline-asm"] }
+# set-vtor/set-sp: start correctly even when a debugger jumps straight to Reset and skips the boot ROM
+cortex-m-rt      = { version = "0.7.7", features = ["set-vtor", "set-sp"] }
+heapless         = "0.9.3"
 panic-halt       = "1.0"
 
 [profile.release]

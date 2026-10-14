@@ -14,7 +14,7 @@ SECTIONS {
     } > FLASH
 } INSERT AFTER .vector_table;
 
-_stext = ADDR(.start_block) + SIZEOF(.start_block);
+_stext = ALIGN(ADDR(.start_block) + SIZEOF(.start_block), 8);
 
 SECTIONS {
     .bi_entries : ALIGN(4)
