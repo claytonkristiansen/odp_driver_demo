@@ -7,7 +7,7 @@ forwards it to the Pico 2, the Pico 2 reads the gauge and replies, and the parse
 back to the page as JSON. The page has no external dependencies. From WSL the board stays on
 Windows and is reached through tools/bridge.ps1 (see tools/pico_port.py); elsewhere it needs pyserial.
 
-    python3 tools/web_dashboard.py              # auto-detects the Pico 2, serves http://localhost:8000
+    python3 tools/web_dashboard.py              # auto-detects the Pico 2, serves http://127.0.0.1:8000
     python3 tools/web_dashboard.py --port COM5  # or name the serial port explicitly
     python3 tools/web_dashboard.py --demo       # simulated board, no hardware needed
     python3 tools/web_dashboard.py --http-port 8080 --host 0.0.0.0   # reachable from other machines
@@ -334,6 +334,10 @@ def parse_reply(line):
 
 def make_handler(pico, demo):
     class Handler(BaseHTTPRequestHandler):
+        # Keep-alive: the page polls every second, and a new connection per request costs ~220 ms
+        # from a Windows browser that opened the page as localhost (see main()).
+        protocol_version = "HTTP/1.1"
+
         def log_message(self, *_):
             pass
 
@@ -358,6 +362,8 @@ def make_handler(pico, demo):
                 return
             try:
                 length = int(self.headers.get("Content-Length", 0))
+                if length > 4096:
+                    self.close_connection = True  # the unread rest of the body would end up in the next request
                 cmd = json.loads(self.rfile.read(min(length, 4096)))["cmd"].strip()
             except (ValueError, KeyError, TypeError, AttributeError):
                 self.send_json({"ok": False, "error": 'Expected JSON like {"cmd": "get soc"}'}, 400)
@@ -405,7 +411,9 @@ def main():
     pico = FakePico() if args.demo else Pico(args.port)
     server = ThreadingHTTPServer((args.host, args.http_port), make_handler(pico, args.demo))
     server.daemon_threads = True
-    print(f"Dashboard at http://{'localhost' if args.host == '127.0.0.1' else args.host}:{args.http_port}")
+    # Not "localhost": a Windows browser resolves that to ::1 first, which WSL doesn't serve, and
+    # waits ~220 ms per new connection before falling back to 127.0.0.1.
+    print(f"Dashboard at http://{args.host}:{args.http_port}")
     try:
         server.serve_forever()
     except KeyboardInterrupt:

@@ -177,7 +177,7 @@ Writes and actions ask for confirmation, and ones that are hard to undo (seal, s
 fuse control, resets) make you type the name. From WSL it needs nothing beyond Python; elsewhere,
 `pip install pyserial`:
 
-    python3 tools/web_dashboard.py          # then open http://localhost:8000
+    python3 tools/web_dashboard.py          # then open http://127.0.0.1:8000
     python3 tools/web_dashboard.py --demo   # simulated board answering the same protocol
     python3 tools/web_dashboard.py --host 0.0.0.0 --http-port 8080   # serve to other machines
 
