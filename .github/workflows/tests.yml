@@ -1,0 +1,64 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  firmware:
+    name: Firmware (cargo test-host, release build)
+    runs-on: ubuntu-latest
+    steps:
+      # Cargo.toml depends on the driver at ../bq41z50, so check both repos out side by side.
+      - uses: actions/checkout@v4
+        with:
+          path: odp_driver_demo
+      - uses: actions/checkout@v4
+        with:
+          repository: claytonkristiansen/bq41z50
+          ref: main
+          path: bq41z50
+      - name: Install the Rust toolchain and RP2350 target from rust-toolchain.toml
+        working-directory: odp_driver_demo
+        run: rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: odp_driver_demo
+      - name: Command protocol against the simulated gauge
+        working-directory: odp_driver_demo
+        run: cargo test-host
+      - name: Firmware builds
+        working-directory: odp_driver_demo
+        run: cargo build --release
+
+  dashboard-server:
+    name: Dashboard server (Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Simulated board, reply parsing and HTTP API
+        run: python3 -m unittest discover -s tests -v
+
+  dashboard-page:
+    name: Dashboard page (jsdom)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - name: Install jsdom
+        working-directory: tests
+        run: npm ci
+      - name: The page against tools/web_dashboard.py --demo
+        working-directory: tests
+        run: npm test
