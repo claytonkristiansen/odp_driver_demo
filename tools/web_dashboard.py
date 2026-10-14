@@ -104,6 +104,8 @@ class FakePico:
     ).split()
     READ = ["temp", "voltage", "current", "soc", "cells"]
     DESIGN_MAH, FCC_MAH = 3000, 2850
+    # Seconds each command takes, roughly what a batch of reads takes on the real board.
+    LATENCY_S = 0.05
 
     def __init__(self):
         self.lock = threading.Lock()
@@ -291,7 +293,7 @@ class FakePico:
 
     def command(self, cmd):
         with self.lock:
-            time.sleep(0.05)
+            time.sleep(self.LATENCY_S)
             self._step()
             words = cmd.split()
             if not words:

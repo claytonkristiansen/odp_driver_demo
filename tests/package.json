@@ -1,0 +1,12 @@
+{
+  "name": "driver-demo-dashboard-tests",
+  "private": true,
+  "type": "module",
+  "description": "Runs tools/dashboard.html in jsdom against tools/web_dashboard.py --demo",
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.3"
+  }
+}

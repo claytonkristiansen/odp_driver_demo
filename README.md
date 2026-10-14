@@ -199,6 +199,8 @@ its own; the script is the only thing holding the serial port.
 None of the tests need hardware.
 
     cargo test-host                                 # firmware command protocol vs a simulated gauge (<1 s)
+    python3 -m unittest discover -s tests          # simulated board, reply parsing, HTTP server (~1 s)
+    cd tests && npm install && npm test             # the dashboard page in jsdom (~25 s)
 
 The firmware's command handling lives in `src/lib.rs`, generic over the I2C bus, so it also
 builds on the PC; `src/main.rs` is only the RP2350 side (USB, the LED, the bus, `lines` and
@@ -208,3 +210,13 @@ BQ41Z50 that answers the driver's SMBus transactions and logs them. The tests ch
 command's replies and units, every generated `reg`/`mac`/`run`/`buf` arm (from name lists the
 generator emits for test builds only), the bytes writes and `call` functions put on the bus,
 refused reads, a missing gauge, `smb`, `scan` and the argument parsers.
+
+The Python and page tests use the dashboard's simulated board (`tools/web_dashboard.py --demo`).
+`tests/test_web_dashboard.py` uses only the Python standard library. It checks the simulated
+board's command protocol (including that every reading the page polls answers), reply parsing,
+and the HTTP API: status codes, input validation and keep-alive. `tests/dashboard.test.mjs` runs
+the page's own script in [jsdom](https://github.com/jsdom/jsdom) against a demo server it starts,
+and checks that every poll reads all 182 values without touching the signature or calibration
+reads, that the count climbs from 0 to 182, that every Driver API item sits in a named group,
+the failure popup, the poll interval dropdown, that polls don't wipe a Write field, and the
+banner when the board is lost.
