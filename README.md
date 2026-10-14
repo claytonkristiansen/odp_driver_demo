@@ -194,3 +194,17 @@ fuse control, resets) make you type the name. From WSL it needs nothing beyond P
 Stop it with Ctrl+C. Several browser tabs can be open at once, but each one polls the board on
 its own; the script is the only thing holding the serial port.
 
+## Tests
+
+None of the tests need hardware.
+
+    cargo test-host                                 # firmware command protocol vs a simulated gauge (<1 s)
+
+The firmware's command handling lives in `src/lib.rs`, generic over the I2C bus, so it also
+builds on the PC; `src/main.rs` is only the RP2350 side (USB, the LED, the bus, `lines` and
+`bootsel`). `cargo test-host` (an alias for `cargo test --lib --target host-tuple`, since the
+default target is the RP2350) runs `src/tests.rs` against `src/sim_gauge.rs`, a simulated
+BQ41Z50 that answers the driver's SMBus transactions and logs them. The tests check each
+command's replies and units, every generated `reg`/`mac`/`run`/`buf` arm (from name lists the
+generator emits for test builds only), the bytes writes and `call` functions put on the bus,
+refused reads, a missing gauge, `smb`, `scan` and the argument parsers.

@@ -7,3 +7,7 @@ target = "thumbv8m.main-none-eabihf"
 # With another SWD debug probe use: runner = "probe-rs run --chip RP2350"
 runner = "tools/flash_jlink.sh"
 rustflags = ["-C", "link-arg=-Tlink.x"]
+
+[alias]
+# The library's tests, on the PC (the default target above is the RP2350): cargo test-host
+test-host = "test --lib --target host-tuple"

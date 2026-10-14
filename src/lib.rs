@@ -48,6 +48,11 @@ use heapless::{String, Vec};
 mod driver_api;
 use driver_api::ApiError;
 
+#[cfg(test)]
+mod sim_gauge;
+#[cfg(test)]
+mod tests;
+
 /// One value the host can ask for. The names in `FIELDS` are what commands and replies use.
 #[derive(Clone, Copy, PartialEq)]
 enum Field {

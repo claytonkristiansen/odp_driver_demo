@@ -34,5 +34,8 @@ cortex-m         = { version = "0.7.9", features = ["inline-asm"] }
 cortex-m-rt      = { version = "0.7.7", features = ["set-vtor", "set-sp"] }
 panic-halt       = "1.0"
 
+[dev-dependencies]
+embassy-futures  = "0.1.2"
+
 [profile.release]
 debug = 2
