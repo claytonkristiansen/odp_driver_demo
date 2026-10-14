@@ -394,6 +394,8 @@ def make_handler(pico, demo):
             self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
+            if self.close_connection:
+                self.send_header("Connection", "close")  # so the client doesn't reuse it
             self.end_headers()
             self.wfile.write(body)
 
