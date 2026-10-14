@@ -4,35 +4,40 @@
 // One match arm per register, MAC command and buffer. Each arm calls the driver's generated
 // accessor and moves the fieldset's raw little-endian bytes in or out.
 
-use crate::{Gauge, GaugeError};
+use bq41z50::{Bq41z50, Bq41z50Error};
+use embedded_hal_async::i2c::{Error, I2c};
 
 /// Largest register or command payload, in bytes.
 pub const MAX_BYTES: usize = 64;
 /// Bytes read for a buffer: the SBS block length byte plus up to 32 data bytes.
 pub const BUFFER_READ_BYTES: usize = 33;
 
-pub enum ApiError {
+pub enum ApiError<E: Error> {
     UnknownName,
     ReadOnly,
     /// A MAC command that returns data was used as an action, or the other way round.
     WrongKind(&'static str),
     WrongLength(usize),
     BadArgs(&'static str),
-    Gauge(GaugeError),
+    Gauge(Bq41z50Error<E>),
 }
 
-impl From<GaugeError> for ApiError {
-    fn from(e: GaugeError) -> Self {
+impl<E: Error> From<Bq41z50Error<E>> for ApiError<E> {
+    fn from(e: Bq41z50Error<E>) -> Self {
         ApiError::Gauge(e)
     }
 }
 
-fn exact<const N: usize>(data: &[u8]) -> Result<[u8; N], ApiError> {
+fn exact<const N: usize, E: Error>(data: &[u8]) -> Result<[u8; N], ApiError<E>> {
     data.try_into().map_err(|_| ApiError::WrongLength(N))
 }
 
 /// Reads a register into `out` and returns its size.
-pub async fn read_register(bq: &mut Gauge, name: &str, out: &mut [u8; MAX_BYTES]) -> Result<usize, ApiError> {
+pub async fn read_register<B: I2c>(
+    bq: &mut Bq41z50<B>,
+    name: &str,
+    out: &mut [u8; MAX_BYTES],
+) -> Result<usize, ApiError<B::Error>> {
     let n = match name {
         "remaining_capacity_alarm" => {
             let raw: [u8; 2] = bq.device.remaining_capacity_alarm().read_async().await?.into();
@@ -260,82 +265,82 @@ pub async fn read_register(bq: &mut Gauge, name: &str, out: &mut [u8; MAX_BYTES]
 }
 
 /// Writes a register from its raw bytes (exactly the register's size).
-pub async fn write_register(bq: &mut Gauge, name: &str, data: &[u8]) -> Result<(), ApiError> {
+pub async fn write_register<B: I2c>(bq: &mut Bq41z50<B>, name: &str, data: &[u8]) -> Result<(), ApiError<B::Error>> {
     match name {
         "remaining_capacity_alarm" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.remaining_capacity_alarm().write_async(|r| *r = raw.into()).await?;
         }
         "remaining_time_alarm" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.remaining_time_alarm().write_async(|r| *r = raw.into()).await?;
         }
         "battery_mode" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.battery_mode().write_async(|r| *r = raw.into()).await?;
         }
         "at_rate" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.at_rate().write_async(|r| *r = raw.into()).await?;
         }
         "cycle_count" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.cycle_count().write_async(|r| *r = raw.into()).await?;
         }
         "design_capacity" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.design_capacity().write_async(|r| *r = raw.into()).await?;
         }
         "design_voltage" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.design_voltage().write_async(|r| *r = raw.into()).await?;
         }
         "specification_info" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.specification_info().write_async(|r| *r = raw.into()).await?;
         }
         "manufacture_date" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.manufacture_date().write_async(|r| *r = raw.into()).await?;
         }
         "serial_number" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.serial_number().write_async(|r| *r = raw.into()).await?;
         }
         "btp_discharge_set" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.btp_discharge_set().write_async(|r| *r = raw.into()).await?;
         }
         "btp_charge_set" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.btp_charge_set().write_async(|r| *r = raw.into()).await?;
         }
         "max_turbo_power" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.max_turbo_power().write_async(|r| *r = raw.into()).await?;
         }
         "sus_turbo_power" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.sus_turbo_power().write_async(|r| *r = raw.into()).await?;
         }
         "turbo_pack_r" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.turbo_pack_r().write_async(|r| *r = raw.into()).await?;
         }
         "turbo_sys_r" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.turbo_sys_r().write_async(|r| *r = raw.into()).await?;
         }
         "turbo_edv" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.turbo_edv().write_async(|r| *r = raw.into()).await?;
         }
         "turbo_current" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.turbo_current().write_async(|r| *r = raw.into()).await?;
         }
         "sus_turbo_current" => {
-            let raw = exact::<2>(data)?;
+            let raw = exact::<2, B::Error>(data)?;
             bq.device.sus_turbo_current().write_async(|r| *r = raw.into()).await?;
         }
         "at_rate_time_to_full" | "at_rate_time_to_empty" | "at_rate_ok" | "temperature" |
@@ -351,7 +356,11 @@ pub async fn write_register(bq: &mut Gauge, name: &str, data: &[u8]) -> Result<(
 }
 
 /// Runs a MAC command that returns data, into `out`; returns the data size.
-pub async fn read_command(bq: &mut Gauge, name: &str, out: &mut [u8; MAX_BYTES]) -> Result<usize, ApiError> {
+pub async fn read_command<B: I2c>(
+    bq: &mut Bq41z50<B>,
+    name: &str,
+    out: &mut [u8; MAX_BYTES],
+) -> Result<usize, ApiError<B::Error>> {
     let n = match name {
         "mac_device_type" => {
             let raw: [u8; 2] = bq.device.mac_device_type().dispatch_out_async().await?.into();
@@ -739,7 +748,7 @@ pub async fn read_command(bq: &mut Gauge, name: &str, out: &mut [u8; MAX_BYTES])
 }
 
 /// Runs a MAC command that takes and returns nothing (an action).
-pub async fn run_command(bq: &mut Gauge, name: &str) -> Result<(), ApiError> {
+pub async fn run_command<B: I2c>(bq: &mut Bq41z50<B>, name: &str) -> Result<(), ApiError<B::Error>> {
     match name {
         "mac_shutdown_mode" => bq.device.mac_shutdown_mode().dispatch_async().await?,
         "mac_sleep_mode" => bq.device.mac_sleep_mode().dispatch_async().await?,
@@ -800,7 +809,11 @@ pub async fn run_command(bq: &mut Gauge, name: &str) -> Result<(), ApiError> {
 }
 
 /// Reads a buffer (SBS block: length byte, then data) into `out`; returns the bytes read.
-pub async fn read_buffer(bq: &mut Gauge, name: &str, out: &mut [u8; MAX_BYTES]) -> Result<usize, ApiError> {
+pub async fn read_buffer<B: I2c>(
+    bq: &mut Bq41z50<B>,
+    name: &str,
+    out: &mut [u8; MAX_BYTES],
+) -> Result<usize, ApiError<B::Error>> {
     let out = &mut out[..BUFFER_READ_BYTES];
     Ok(match name {
         "manufacture_name" => bq.device.manufacture_name().read_async(out).await?,
@@ -813,7 +826,7 @@ pub async fn read_buffer(bq: &mut Gauge, name: &str, out: &mut [u8; MAX_BYTES]) 
 }
 
 /// Writes raw bytes to a buffer.
-pub async fn write_buffer(bq: &mut Gauge, name: &str, data: &[u8]) -> Result<(), ApiError> {
+pub async fn write_buffer<B: I2c>(bq: &mut Bq41z50<B>, name: &str, data: &[u8]) -> Result<(), ApiError<B::Error>> {
     match name {
         "authenticate" => {
             bq.device.authenticate().write_async(data).await?;
@@ -823,3 +836,171 @@ pub async fn write_buffer(bq: &mut Gauge, name: &str, data: &[u8]) -> Result<(),
     }
     Ok(())
 }
+
+/// Registers: name, size in bytes, writable.
+#[cfg(test)]
+pub const REGISTERS: &[(&str, usize, bool)] = &[
+    ("remaining_capacity_alarm", 2, true),
+    ("remaining_time_alarm", 2, true),
+    ("battery_mode", 2, true),
+    ("at_rate", 2, true),
+    ("at_rate_time_to_full", 2, false),
+    ("at_rate_time_to_empty", 2, false),
+    ("at_rate_ok", 2, false),
+    ("temperature", 2, false),
+    ("voltage", 2, false),
+    ("current", 2, false),
+    ("avg_current", 2, false),
+    ("max_error", 2, false),
+    ("relative_state_of_charge", 2, false),
+    ("absolute_state_of_charge", 2, false),
+    ("remaining_capacity", 2, false),
+    ("full_charge_capacity", 2, false),
+    ("run_time_to_empty", 2, false),
+    ("average_time_to_empty", 2, false),
+    ("average_time_to_full", 2, false),
+    ("charging_current", 2, false),
+    ("charging_voltage", 2, false),
+    ("battery_status", 2, false),
+    ("cycle_count", 2, true),
+    ("design_capacity", 2, true),
+    ("design_voltage", 2, true),
+    ("specification_info", 2, true),
+    ("manufacture_date", 2, true),
+    ("serial_number", 2, true),
+    ("cell_voltage_4", 2, false),
+    ("cell_voltage_3", 2, false),
+    ("cell_voltage_2", 2, false),
+    ("cell_voltage_1", 2, false),
+    ("btp_discharge_set", 2, true),
+    ("btp_charge_set", 2, true),
+    ("state_of_health_soh", 2, false),
+    ("max_turbo_power", 2, true),
+    ("sus_turbo_power", 2, true),
+    ("turbo_pack_r", 2, true),
+    ("turbo_sys_r", 2, true),
+    ("turbo_edv", 2, true),
+    ("turbo_current", 2, true),
+    ("sus_turbo_current", 2, true),
+    ("turbo_rhf_effective", 2, false),
+    ("turbo_vload", 2, false),
+];
+/// MAC commands that return data: name, size in bytes.
+#[cfg(test)]
+pub const READ_COMMANDS: &[(&str, usize)] = &[
+    ("mac_device_type", 2),
+    ("mac_firmware_version", 11),
+    ("mac_hardware_version", 2),
+    ("mac_instruction_flash_signature", 2),
+    ("mac_static_df_signature", 2),
+    ("mac_chem_id", 2),
+    ("mac_static_chem_df_sig", 2),
+    ("mac_all_df_signature", 2),
+    ("mac_safety_alert", 4),
+    ("mac_safety_status", 4),
+    ("mac_pf_alert", 4),
+    ("mac_pf_status", 4),
+    ("mac_operation_status", 4),
+    ("mac_charging_status", 5),
+    ("mac_gauging_status", 6),
+    ("mac_manufacturing_status", 2),
+    ("mac_afe_reg", 6),
+    ("no_load_rem_cap", 2),
+    ("mac_lifetime_data_block_1", 26),
+    ("mac_lifetime_data_block_2", 20),
+    ("mac_lifetime_data_block_3", 4),
+    ("mac_lifetime_data_block_4", 32),
+    ("mac_lifetime_data_block_5", 32),
+    ("mac_lifetime_data_block_6", 32),
+    ("mac_lifetime_data_block_7", 32),
+    ("mac_lifetime_data_block_8", 32),
+    ("mac_lifetime_data_block_9", 32),
+    ("mac_lifetime_data_block_10", 32),
+    ("mac_lifetime_data_block_11", 32),
+    ("mac_lifetime_data_block_12", 32),
+    ("mac_lifetime_data_block_13", 30),
+    ("mac_lifetime_data_block_14", 30),
+    ("mac_lifetime_data_block_15", 30),
+    ("mac_power_events", 4),
+    ("mac_manufacture_info", 32),
+    ("mac_da_status_1", 32),
+    ("mac_da_status_2", 26),
+    ("mac_gauge_status_1", 32),
+    ("mac_gauge_status_2", 32),
+    ("mac_gauge_status_3", 32),
+    ("mac_cb_status", 20),
+    ("mac_state_of_health", 4),
+    ("mac_filter_capacity", 8),
+    ("mac_manufacture_info_b", 32),
+    ("mac_lifetime_data_block_16", 32),
+    ("mac_output_ccadc_cal", 24),
+    ("mac_output_shorted_ccadc_cal", 24),
+    ("safety_alert", 4),
+    ("safety_status", 4),
+    ("pf_alert", 4),
+    ("pf_status", 4),
+    ("operation_status", 4),
+    ("charging_status", 5),
+    ("gauging_status", 6),
+    ("manufacturing_status", 2),
+    ("afe_reg", 6),
+    ("lifetime_data_block_1", 26),
+    ("lifetime_data_block_2", 20),
+    ("lifetime_data_block_3", 4),
+    ("lifetime_data_block_4", 32),
+    ("lifetime_data_block_5", 32),
+    ("lifetime_data_block_6", 32),
+    ("lifetime_data_block_7", 32),
+    ("lifetime_data_block_8", 32),
+    ("lifetime_data_block_11", 32),
+    ("lifetime_data_block_12", 32),
+    ("da_status_1", 32),
+    ("da_status_2", 26),
+    ("gauge_status_1", 32),
+    ("gauge_status_2", 32),
+    ("gauge_status_3", 32),
+    ("cb_status", 20),
+    ("state_of_health", 4),
+    ("filter_capacity", 8),
+];
+/// MAC commands that take and return nothing.
+#[cfg(test)]
+pub const ACTIONS: &[&str] = &[
+    "mac_shutdown_mode",
+    "mac_sleep_mode",
+    "mac_auto_cc_offset",
+    "mac_fuse_toggle",
+    "mac_pchg_fet_toggle",
+    "mac_chg_fet_toggle",
+    "mac_dsg_fet_toggle",
+    "mac_gauging",
+    "mac_fet_ctrl",
+    "mac_lifetime_data_collection",
+    "mac_permanent_failure",
+    "mac_black_block_recorder",
+    "mac_fuse",
+    "mac_led_disp_en",
+    "mac_lifetime_data_rst",
+    "mac_pf_data_rst",
+    "mac_blk_box_rec_reset",
+    "mac_led_toggle",
+    "mac_led_disp_press",
+    "mac_calibration_mode",
+    "mac_lifetime_data_flush",
+    "mac_lifetime_data_speed_up_mode",
+    "mac_seal",
+    "mac_device_reset",
+    "mac_rom_mode",
+    "mac_exit_calibration_output_mode",
+    "mac_stop_output_ccadc_cal",
+    "mac_stop_output_shorted_ccadc_cal",
+];
+/// Buffers: name, writable.
+#[cfg(test)]
+pub const BUFFERS: &[(&str, bool)] = &[
+    ("manufacture_name", false),
+    ("device_name", false),
+    ("device_chemistry", false),
+    ("manufacturer_data", false),
+    ("authenticate", true),
+];

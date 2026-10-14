@@ -120,7 +120,7 @@ reset. The gauge bus therefore uses embassy-rp's blocking I2C (see `BlinkingBus`
 
 Everything below works around a gap in the driver or its `.ddsl`. Each is marked in the code.
 
-**Firmware (`src/main.rs`)**
+**Firmware command protocol (`src/lib.rs`)**
 
 1. Units for the BQ41Z50-specific registers come from the TRM, not the `.ddsl`: turbo power cW,
    turbo resistances mOhm, turbo/trip-point voltages mV, turbo currents mA, SOH energy cWh.
@@ -193,3 +193,4 @@ fuse control, resets) make you type the name. From WSL it needs nothing beyond P
 
 Stop it with Ctrl+C. Several browser tabs can be open at once, but each one polls the board on
 its own; the script is the only thing holding the serial port.
+

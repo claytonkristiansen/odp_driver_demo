@@ -162,36 +162,41 @@ def rust(items):
     w("// One match arm per register, MAC command and buffer. Each arm calls the driver's generated")
     w("// accessor and moves the fieldset's raw little-endian bytes in or out.")
     w("")
-    w("use crate::{Gauge, GaugeError};")
+    w("use bq41z50::{Bq41z50, Bq41z50Error};")
+    w("use embedded_hal_async::i2c::{Error, I2c};")
     w("")
     w(f"/// Largest register or command payload, in bytes.")
     w(f"pub const MAX_BYTES: usize = {MAX_BYTES};")
     w(f"/// Bytes read for a buffer: the SBS block length byte plus up to 32 data bytes.")
     w(f"pub const BUFFER_READ_BYTES: usize = {BUFFER_READ_BYTES};")
     w("")
-    w("pub enum ApiError {")
+    w("pub enum ApiError<E: Error> {")
     w("    UnknownName,")
     w("    ReadOnly,")
     w("    /// A MAC command that returns data was used as an action, or the other way round.")
     w("    WrongKind(&'static str),")
     w("    WrongLength(usize),")
     w("    BadArgs(&'static str),")
-    w("    Gauge(GaugeError),")
+    w("    Gauge(Bq41z50Error<E>),")
     w("}")
     w("")
-    w("impl From<GaugeError> for ApiError {")
-    w("    fn from(e: GaugeError) -> Self {")
+    w("impl<E: Error> From<Bq41z50Error<E>> for ApiError<E> {")
+    w("    fn from(e: Bq41z50Error<E>) -> Self {")
     w("        ApiError::Gauge(e)")
     w("    }")
     w("}")
     w("")
-    w("fn exact<const N: usize>(data: &[u8]) -> Result<[u8; N], ApiError> {")
+    w("fn exact<const N: usize, E: Error>(data: &[u8]) -> Result<[u8; N], ApiError<E>> {")
     w("    data.try_into().map_err(|_| ApiError::WrongLength(N))")
     w("}")
     w("")
 
     w("/// Reads a register into `out` and returns its size.")
-    w("pub async fn read_register(bq: &mut Gauge, name: &str, out: &mut [u8; MAX_BYTES]) -> Result<usize, ApiError> {")
+    w("pub async fn read_register<B: I2c>(")
+    w("    bq: &mut Bq41z50<B>,")
+    w("    name: &str,")
+    w("    out: &mut [u8; MAX_BYTES],")
+    w(") -> Result<usize, ApiError<B::Error>> {")
     w("    let n = match name {")
     for r in regs:
         n, size = r["name"].lower(), r["size"]
@@ -207,7 +212,7 @@ def rust(items):
     w("")
 
     w("/// Writes a register from its raw bytes (exactly the register's size).")
-    w("pub async fn write_register(bq: &mut Gauge, name: &str, data: &[u8]) -> Result<(), ApiError> {")
+    w("pub async fn write_register<B: I2c>(bq: &mut Bq41z50<B>, name: &str, data: &[u8]) -> Result<(), ApiError<B::Error>> {")
     w("    match name {")
     ro = [r["name"].lower() for r in regs if r["access"] == "RO"]
     for r in regs:
@@ -215,7 +220,7 @@ def rust(items):
             continue
         n, size = r["name"].lower(), r["size"]
         w(f'        "{n}" => {{')
-        w(f"            let raw = exact::<{size}>(data)?;")
+        w(f"            let raw = exact::<{size}, B::Error>(data)?;")
         w(f"            bq.device.{n}().write_async(|r| *r = raw.into()).await?;")
         w("        }")
     for i in range(0, len(ro), 4):
@@ -231,7 +236,11 @@ def rust(items):
     reads = [c for c in cmds if c["size"]]
     actions = [c for c in cmds if not c["size"]]
     w("/// Runs a MAC command that returns data, into `out`; returns the data size.")
-    w("pub async fn read_command(bq: &mut Gauge, name: &str, out: &mut [u8; MAX_BYTES]) -> Result<usize, ApiError> {")
+    w("pub async fn read_command<B: I2c>(")
+    w("    bq: &mut Bq41z50<B>,")
+    w("    name: &str,")
+    w("    out: &mut [u8; MAX_BYTES],")
+    w(") -> Result<usize, ApiError<B::Error>> {")
     w("    let n = match name {")
     for c in reads:
         n, size = c["name"].lower(), c["size"]
@@ -252,7 +261,7 @@ def rust(items):
     w("")
 
     w("/// Runs a MAC command that takes and returns nothing (an action).")
-    w("pub async fn run_command(bq: &mut Gauge, name: &str) -> Result<(), ApiError> {")
+    w("pub async fn run_command<B: I2c>(bq: &mut Bq41z50<B>, name: &str) -> Result<(), ApiError<B::Error>> {")
     w("    match name {")
     for c in actions:
         n = c["name"].lower()
@@ -269,7 +278,11 @@ def rust(items):
     w("")
 
     w("/// Reads a buffer (SBS block: length byte, then data) into `out`; returns the bytes read.")
-    w("pub async fn read_buffer(bq: &mut Gauge, name: &str, out: &mut [u8; MAX_BYTES]) -> Result<usize, ApiError> {")
+    w("pub async fn read_buffer<B: I2c>(")
+    w("    bq: &mut Bq41z50<B>,")
+    w("    name: &str,")
+    w("    out: &mut [u8; MAX_BYTES],")
+    w(") -> Result<usize, ApiError<B::Error>> {")
     w("    let out = &mut out[..BUFFER_READ_BYTES];")
     w("    Ok(match name {")
     for b in bufs:
@@ -281,7 +294,7 @@ def rust(items):
     w("")
 
     w("/// Writes raw bytes to a buffer.")
-    w("pub async fn write_buffer(bq: &mut Gauge, name: &str, data: &[u8]) -> Result<(), ApiError> {")
+    w("pub async fn write_buffer<B: I2c>(bq: &mut Bq41z50<B>, name: &str, data: &[u8]) -> Result<(), ApiError<B::Error>> {")
     w("    match name {")
     for b in bufs:
         n = b["name"].lower()
@@ -297,6 +310,33 @@ def rust(items):
     w("    }")
     w("    Ok(())")
     w("}")
+    w("")
+
+    # So the host tests can try every arm above. Test builds only; the firmware doesn't carry them.
+    w("/// Registers: name, size in bytes, writable.")
+    w("#[cfg(test)]")
+    w("pub const REGISTERS: &[(&str, usize, bool)] = &[")
+    for r in regs:
+        w(f'    ("{r["name"].lower()}", {r["size"]}, {"false" if r["access"] == "RO" else "true"}),')
+    w("];")
+    w("/// MAC commands that return data: name, size in bytes.")
+    w("#[cfg(test)]")
+    w("pub const READ_COMMANDS: &[(&str, usize)] = &[")
+    for c in reads:
+        w(f'    ("{c["name"].lower()}", {c["size"]}),')
+    w("];")
+    w("/// MAC commands that take and return nothing.")
+    w("#[cfg(test)]")
+    w("pub const ACTIONS: &[&str] = &[")
+    for c in actions:
+        w(f'    "{c["name"].lower()}",')
+    w("];")
+    w("/// Buffers: name, writable.")
+    w("#[cfg(test)]")
+    w("pub const BUFFERS: &[(&str, bool)] = &[")
+    for b in bufs:
+        w(f'    ("{b["name"].lower()}", {"false" if b["access"] == "RO" else "true"}),')
+    w("];")
     return "\n".join(out) + "\n"
 
 
