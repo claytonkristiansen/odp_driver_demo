@@ -15,7 +15,6 @@
     --temp: #eb6834;
     --volts: #2a78d6;
     --amps: #1baf7a;
-    --cells: #2a78d6;
     --good: #0ca30c;
     --warning: #fab219;
     --critical: #d03b3b;
@@ -32,7 +31,6 @@
       --temp: #d95926;
       --volts: #3987e5;
       --amps: #199e70;
-      --cells: #3987e5;
     }
   }
   * { box-sizing: border-box; }
@@ -51,8 +49,19 @@
   .banner[hidden] { display: none; }
   .banner b::before { content: "⚠ "; color: var(--critical); }
   .banner .detail { color: var(--text-secondary); font-size: 14px; margin-left: 8px; }
+  .read-fail {
+    position: fixed; right: 24px; bottom: 24px; z-index: 6; width: min(420px, calc(100vw - 48px));
+    background: var(--surface-1); border: 1px solid var(--border); border-left: 4px solid var(--critical);
+    border-radius: 8px; padding: 12px 16px; box-shadow: 0 8px 24px rgb(0 0 0 / .2);
+  }
+  .read-fail[hidden] { display: none; }
+  .read-fail .head { display: flex; align-items: center; gap: 8px; }
+  .read-fail .head b::before { content: "⚠ "; color: var(--critical); }
+  .read-fail .head button { margin-left: auto; }
+  .read-fail ul { margin: 8px 0 0; padding-left: 20px; max-height: 200px; overflow-y: auto; font-size: 13px; }
+  .read-fail li span { color: var(--text-secondary); }
   /* While the gauge isn't answering, the values shown are the last good ones: dim them. */
-  body.stale .tiles .value, body.stale .chart svg, body.stale .cellchart svg,
+  body.stale .tiles .value, body.stale .chart svg,
   body.stale .group td.val, .group td.val.stale, .api .raw.stale { opacity: .55; }
   .stale-note { color: var(--text-secondary); font-size: 12px; font-style: italic; margin-top: 2px; }
   .stale-note::before { content: "⚠ "; color: var(--critical); font-style: normal; }
@@ -70,6 +79,11 @@
     border: 1px solid var(--border); background: var(--surface-1); color: var(--text-primary);
   }
   .ranges button[aria-pressed="true"] { background: var(--text-primary); color: var(--surface-1); }
+  .poll-rate { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+  .poll-rate select {
+    font: inherit; padding: 4px 8px; border-radius: 6px; cursor: pointer;
+    border: 1px solid var(--border); background: var(--surface-1); color: var(--text-primary);
+  }
 
   .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }
   .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
@@ -80,11 +94,10 @@
   .meter { height: 8px; border-radius: 4px; background: var(--grid); overflow: hidden; margin-top: 6px; }
   .meter > div { height: 100%; width: 0; border-radius: 4px; background: var(--good); transition: width .3s; }
 
-  .layout { display: grid; grid-template-columns: 3fr 1fr; gap: 16px; }
+  .layout { margin-bottom: 16px; }
   .charts { display: grid; gap: 16px; }
   .chart { position: relative; }
   .chart svg { display: block; width: 100%; height: 170px; overflow: visible; touch-action: none; }
-  .cellchart svg { display: block; width: 100%; height: 220px; }
   .axis text { fill: var(--text-secondary); font-size: 12px; font-variant-numeric: tabular-nums; }
   .gridline { stroke: var(--grid); stroke-width: 1; }
   .zero { stroke: var(--text-secondary); stroke-dasharray: 4 4; opacity: .6; }
@@ -100,7 +113,6 @@
   .tooltip .row b { margin-left: auto; padding-left: 16px; }
   .tooltip .time { color: var(--text-secondary); margin-bottom: 4px; }
 
-  .side { display: grid; gap: 16px; align-content: start; }
   .note { color: var(--text-secondary); font-size: 13px; margin: 4px 0 0; }
   table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 14px; }
   th, td { text-align: right; padding: 4px 8px; border-bottom: 1px solid var(--grid); }
@@ -146,6 +158,12 @@
   .api .actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   .api .actions button { font-size: 13px; padding: 2px 10px; }
   .api .actions label { font-size: 13px; color: var(--text-secondary); display: flex; gap: 4px; align-items: center; }
+  .api tr.group-head th { padding: 18px 8px 6px; font-size: 15px; border-bottom: 1px solid var(--border); }
+  .counts { color: var(--text-secondary); font-size: 13px; font-weight: normal; margin-left: 8px; font-variant-numeric: tabular-nums; }
+  .counts .bad::before { content: "⚠ "; color: var(--critical); }
+  .tabs .counts { margin-left: 6px; font-size: 12px; }
+  .tabs button[aria-selected="true"] .counts { color: inherit; }
+  .poll-summary { font-variant-numeric: tabular-nums; }
   .api input.arg {
     font: 12px ui-monospace, monospace; padding: 3px 6px; border-radius: 4px; width: 100%; margin-top: 4px;
     border: 1px solid var(--border); background: var(--surface-0); color: var(--text-primary);
@@ -155,12 +173,15 @@
 
   @media (max-width: 1000px) {
     .tiles { grid-template-columns: repeat(2, 1fr); }
-    .layout { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 <div class="banner" id="banner" role="alert" hidden><b id="banner-title"></b><span class="detail" id="banner-detail"></span></div>
+<div class="read-fail" id="read-fail" role="alert" hidden>
+  <div class="head"><b id="read-fail-title"></b><button class="toggle" id="read-fail-close">Dismiss</button></div>
+  <ul id="read-fail-list"></ul>
+</div>
 <header>
   <h1>Live Battery Monitor</h1>
   <div class="status"><span class="dot" id="dot"></span><span id="status">Connecting to the dashboard server...</span></div>
@@ -170,7 +191,14 @@
     <button data-range="180" aria-pressed="true">3 min</button>
     <button data-range="600">10 min</button>
   </div>
-  <button class="toggle" id="toggle-poll" aria-pressed="false">Pause polling</button>
+  <label class="poll-rate">Poll every
+    <select id="poll-rate">
+      <option value="1000" selected>1 s</option>
+      <option value="2000">2 s</option>
+      <option value="5000">5 s</option>
+      <option value="10000">10 s</option>
+    </select>
+  </label>
   <button class="toggle" id="toggle-table" aria-expanded="false">Show table</button>
 </header>
 
@@ -200,14 +228,6 @@
     <div class="card chart" data-key="volts"><h2>Pack voltage (V)</h2><svg></svg><div class="tooltip"></div></div>
     <div class="card chart" data-key="amps"><h2>Current (A)</h2><svg></svg><div class="tooltip"></div></div>
   </div>
-  <div class="side">
-    <div class="card cellchart">
-      <h2>Cell voltages</h2>
-      <svg id="cells"></svg>
-      <div class="tooltip" id="cell-tip"></div>
-      <p class="note" id="cell-note">Bars show each cell's offset from the pack average, in mV.</p>
-    </div>
-  </div>
 </section>
 
 <section class="card all-data">
@@ -223,9 +243,8 @@
 <section class="card api">
   <div class="all-data-head">
     <h2>Driver API</h2>
-    <span class="note" id="api-note">Every register, MAC command, buffer and function of the bq41z50 driver.</span>
+    <span class="note poll-summary" id="api-note">Every register, MAC command, buffer and function of the bq41z50 driver.</span>
     <div class="spacer"></div>
-    <button class="toggle" id="read-all">Read all</button>
     <input id="api-filter" type="search" placeholder="Filter by name or address" aria-label="Filter driver API">
   </div>
   <div class="tabs" role="tablist" id="api-tabs"></div>
@@ -332,50 +351,6 @@ function renderLine(card) {
     el("line", { x1: x(marked.t), x2: x(marked.t), y1: M.top, y2: H - M.bottom, class: "crosshair" }, svg);
   }
   el("circle", { cx: x(marked.t), cy: y(marked[key]), r: 5, fill: color, stroke: css("--surface-1"), "stroke-width": 2 }, svg);
-}
-
-function renderCells() {
-  const svg = document.getElementById("cells");
-  const W = svg.clientWidth, H = svg.clientHeight;
-  svg.replaceChildren();
-  const last = data[data.length - 1];
-  if (!last || !last.cells.length) {
-    el("text", { x: W / 2, y: H / 2, "text-anchor": "middle", class: "empty" }, svg).textContent = "Waiting for data...";
-    return;
-  }
-  const avg = last.cells.reduce((a, b) => a + b, 0) / last.cells.length;
-  const offsets = last.cells.map(c => (c - avg) * 1000);
-  const extent = Math.max(5, ...offsets.map(Math.abs)) * 1.2;
-  const m = { top: 8, right: 56, bottom: 24, left: 48 };
-  const x = v => m.left + (v + extent) / (2 * extent) * (W - m.left - m.right);
-  const band = (H - m.top - m.bottom) / offsets.length;
-  const barH = Math.min(24, band * 0.6);
-
-  const axis = el("g", { class: "axis" }, svg);
-  for (const v of niceTicks(-extent, extent, 4)) {
-    el("line", { x1: x(v), x2: x(v), y1: m.top, y2: H - m.bottom, class: v === 0 ? "zero" : "gridline" }, axis);
-    el("text", { x: x(v), y: H - 4, "text-anchor": "middle" }, axis).textContent = (v > 0 ? "+" : "") + v;
-  }
-  const tip = document.getElementById("cell-tip");
-  offsets.forEach((off, i) => {
-    const cy = m.top + band * i + band / 2;
-    el("text", { x: m.left - 8, y: cy + 4, "text-anchor": "end" }, axis).textContent = `Cell ${i + 1}`;
-    const x0 = Math.min(x(0), x(off)), w = Math.max(Math.abs(x(off) - x(0)), 2);
-    const bar = el("rect", { x: x0, y: cy - barH / 2, width: w, height: barH, rx: 4, fill: css("--cells") }, svg);
-    el("text", { x: W - m.right + 8, y: cy + 4 }, axis).textContent = `${fmt(last.cells[i], 3)} V`;
-    const hit = el("rect", { x: m.left, y: cy - band / 2, width: W - m.left - m.right, height: band, fill: "transparent" }, svg);
-    hit.addEventListener("pointermove", e => {
-      bar.setAttribute("opacity", 0.8);
-      tip.innerHTML = `<div class="time">Cell ${i + 1}</div>
-        <div class="row">Voltage<b>${fmt(last.cells[i], 3)} V</b></div>
-        <div class="row">vs. average<b>${off >= 0 ? "+" : "−"}${fmt(Math.abs(off), 1)} mV</b></div>`;
-      placeTip(tip, svg.parentElement, e);
-    });
-    hit.addEventListener("pointerleave", () => { bar.removeAttribute("opacity"); tip.style.display = "none"; });
-  });
-  const spread = (Math.max(...last.cells) - Math.min(...last.cells)) * 1000;
-  document.getElementById("cell-note").textContent =
-    `Offset of each cell from the pack average (${fmt(avg, 3)} V), in mV. Spread: ${fmt(spread, 0)} mV.`;
 }
 
 function placeTip(tip, card, e) {
@@ -591,8 +566,9 @@ function renderAllData(values, t) {
     }
   }
   const failed = ALL_FIELDS.filter(n => values[n] === null).length;
-  document.getElementById("all-updated").textContent = `Updated ${clock(t)} · ${ALL_FIELDS.length} fields` +
-    (failed ? ` · ${failed} refused by the gauge (it may be sealed); their last values are kept` : "");
+  document.getElementById("all-updated").textContent =
+    `Updated ${clock(t)} · ${ALL_FIELDS.length} fields: ${ALL_FIELDS.length - failed} passed, ${failed} failed` +
+    (failed ? " (refused by the gauge, which may be sealed; their last values are kept)" : "");
 }
 
 document.getElementById("filter").addEventListener("input", e => {
@@ -613,7 +589,6 @@ buildGroups();
 const charts = [...document.querySelectorAll(".chart")];
 function renderAll() {
   charts.forEach(renderLine);
-  renderCells();
   renderTiles();
   renderTable();
 }
@@ -663,7 +638,6 @@ function setStatus(text, state) {
   document.getElementById("dot").className = `dot ${state}`;
 }
 
-const POLL_CMD = `get ${ALL_FIELDS.join(" ")}`;
 
 // ---- Driver API explorer -------------------------------------------------------------------
 // The metadata comes from tools/driver_api.json, generated from the driver's bq41z50.ddsl.
@@ -677,7 +651,7 @@ const TABS = [
 let api = null;
 let apiTab = "registers";
 const apiState = {};   // "kind:name" -> { raw, error, failed, t }
-const watched = new Set();
+const valueSlots = new Map();   // "kind:name" -> { tab, item, slot } for the rows on screen
 
 function apiItems(tab) {
   if (!api) return [];
@@ -685,8 +659,130 @@ function apiItems(tab) {
   if (tab === "actions") return api.commands.filter(c => c.kind === "action");
   return api[tab];
 }
-const readCmd = tab => ({ registers: "reg", reads: "mac", buffers: "buf" })[tab];
-const readable = (tab, item) => readCmd(tab) && !item.sideEffects;
+const readCmd = tab => ({ registers: "reg", reads: "mac", buffers: "buf", helpers: "call" })[tab];
+// lib.rs functions that only read and take no arguments. The three signature reads are left out:
+// the gauge needs 0.5-1 s to compute each one, which would make every poll 2.5 s longer.
+const POLLED_HELPERS = new Set(["temperature_fahrenheit", "read_security_keys", "read_authentication_key",
+  "read_mfg_info", "read_mfg_info_c", "read_charging_voltage_override"]);
+const SLOW_HELPERS = new Set(["read_instruction_flash_signature", "read_static_df_signature", "read_all_df_signature"]);
+// These signature MAC reads are not polled: each makes the gauge compute a signature, it NACKs the
+// read while it does, and keeps NACKing for 0.5-1 s, so the reads polled right after fail too
+// (mac_chem_id did). The value is the lib.rs function that waits for the signature.
+// mac_static_chem_df_sig reads fine on its own and stays polled.
+const SIGNATURE_MACS = { mac_instruction_flash_signature: "read_instruction_flash_signature",
+  mac_static_df_signature: "read_static_df_signature", mac_all_df_signature: "read_all_df_signature" };
+const readable = (tab, item) => tab === "helpers" ? POLLED_HELPERS.has(item.name)
+  : !!readCmd(tab) && !item.sideEffects && !(tab === "reads" && item.name in SIGNATURE_MACS);
+
+// Rows of each tab grouped by what they hold, in display order. Anything not listed (e.g. after
+// regenerating driver_api.json) lands in "Other".
+const seq = (prefix, ids) => ids.map(i => prefix + i);
+const API_GROUPS = {
+  registers: [
+    ["Measurements", ["temperature", "voltage", "current", "avg_current", ...seq("cell_voltage_", [1, 2, 3, 4])]],
+    ["State of charge and capacity", ["relative_state_of_charge", "absolute_state_of_charge", "max_error",
+      "remaining_capacity", "full_charge_capacity", "design_capacity"]],
+    ["Time estimates", ["run_time_to_empty", "average_time_to_empty", "average_time_to_full"]],
+    ["AtRate and alarms", ["at_rate", "at_rate_time_to_full", "at_rate_time_to_empty", "at_rate_ok",
+      "remaining_capacity_alarm", "remaining_time_alarm"]],
+    ["Charging, health and trip points", ["charging_current", "charging_voltage", "cycle_count",
+      "state_of_health_soh", "btp_discharge_set", "btp_charge_set"]],
+    ["Status and mode", ["battery_status", "battery_mode"]],
+    ["Turbo", ["max_turbo_power", "sus_turbo_power", "turbo_current", "sus_turbo_current", "turbo_pack_r",
+      "turbo_sys_r", "turbo_rhf_effective", "turbo_vload", "turbo_edv"]],
+    ["Device info", ["design_voltage", "specification_info", "manufacture_date", "serial_number"]],
+  ],
+  reads: [
+    ["Device info", ["mac_device_type", "mac_firmware_version", "mac_hardware_version", "mac_chem_id",
+      "mac_manufacture_info", "mac_manufacture_info_b"]],
+    ["Safety and permanent failure", ["mac_safety_alert", "safety_alert", "mac_safety_status", "safety_status",
+      "mac_pf_alert", "pf_alert", "mac_pf_status", "pf_status"]],
+    ["Operation, charging and gauging status", ["mac_operation_status", "operation_status", "mac_charging_status",
+      "charging_status", "mac_gauging_status", "gauging_status", "mac_manufacturing_status", "manufacturing_status",
+      "mac_gauge_status_1", "gauge_status_1", "mac_gauge_status_2", "gauge_status_2", "mac_gauge_status_3",
+      "gauge_status_3", "mac_cb_status", "cb_status"]],
+    ["Data acquisition and AFE", ["mac_da_status_1", "da_status_1", "mac_da_status_2", "da_status_2",
+      "mac_afe_reg", "afe_reg"]],
+    ["Capacity and health", ["no_load_rem_cap", "mac_state_of_health", "state_of_health", "mac_filter_capacity",
+      "filter_capacity"]],
+    ["Lifetime data", [...seq("mac_lifetime_data_block_", Array.from({ length: 16 }, (_, i) => i + 1)),
+      ...seq("lifetime_data_block_", [1, 2, 3, 4, 5, 6, 7, 8, 11, 12]), "mac_power_events"]],
+    ["Signatures", ["mac_instruction_flash_signature", "mac_static_df_signature", "mac_static_chem_df_sig",
+      "mac_all_df_signature"]],
+    ["Calibration output", ["mac_output_ccadc_cal", "mac_output_shorted_ccadc_cal"]],
+  ],
+  buffers: [
+    ["Device info", ["manufacture_name", "device_name", "device_chemistry"]],
+    ["Manufacturer data and authentication", ["manufacturer_data", "authenticate"]],
+  ],
+  actions: [
+    ["Power modes and reset", ["mac_shutdown_mode", "mac_sleep_mode", "mac_rom_mode", "mac_device_reset"]],
+    ["FET and fuse control", ["mac_fet_ctrl", "mac_chg_fet_toggle", "mac_dsg_fet_toggle", "mac_pchg_fet_toggle",
+      "mac_fuse_toggle", "mac_fuse"]],
+    ["Gauging and calibration", ["mac_gauging", "mac_auto_cc_offset", "mac_calibration_mode",
+      "mac_exit_calibration_output_mode", "mac_stop_output_ccadc_cal", "mac_stop_output_shorted_ccadc_cal"]],
+    ["Lifetime data and recorders", ["mac_lifetime_data_collection", "mac_lifetime_data_flush",
+      "mac_lifetime_data_speed_up_mode", "mac_lifetime_data_rst", "mac_permanent_failure", "mac_pf_data_rst",
+      "mac_black_block_recorder", "mac_blk_box_rec_reset"]],
+    ["LEDs", ["mac_led_disp_en", "mac_led_toggle", "mac_led_disp_press"]],
+    ["Security", ["mac_seal"]],
+  ],
+  helpers: [
+    ["Readings", ["temperature_fahrenheit", "read_charging_voltage_override", "write_charging_voltage_override"]],
+    ["Security and access", ["read_security_keys", "write_security_keys", "read_authentication_key",
+      "write_authentication_key", "seal_fg", "unseal_fg", "send_access_key"]],
+    ["Manufacturer info", ["read_mfg_info", "write_mfg_info", "read_mfg_info_c", "write_mfg_info_c"]],
+    ["Signatures (not polled: 0.5-1 s each)", [...SLOW_HELPERS]],
+    ["SmartBattery setters", ["set_remaining_capacity_alarm", "set_remaining_time_alarm", "set_battery_mode",
+      "set_at_rate"]],
+  ],
+};
+
+function groupedItems(tab) {
+  const items = apiItems(tab), byName = new Map(items.map(i => [i.name, i])), used = new Set();
+  const groups = (API_GROUPS[tab] || []).map(([title, names]) =>
+    [title, names.filter(n => byName.has(n)).map(n => { used.add(n); return byName.get(n); })]);
+  const rest = items.filter(i => !used.has(i.name));
+  if (rest.length) groups.push(["Other", rest]);
+  return groups.filter(([, list]) => list.length);
+}
+
+const POLLED_TABS = ["registers", "reads", "buffers", "helpers"];
+const polledItems = tab => apiItems(tab).filter(i => readable(tab, i));
+const itemOk = (tab, item) => {
+  const st = apiState[`${tab}:${item.name}`];
+  return !st ? null : !(st.error || st.failed);
+};
+// "✓ 43  ⚠ 1 failed" for the polled items in `items`; empty until they have been read.
+function countsText(el, tab, items) {
+  const polled = items.filter(i => readable(tab, i)), states = polled.map(i => itemOk(tab, i)).filter(x => x !== null);
+  const failed = states.filter(x => !x).length;
+  el.replaceChildren();
+  if (!polled.length) { el.textContent = `${items.length} not polled`; return; }
+  if (!states.length) { el.textContent = `${polled.length} polled`; return; }
+  el.append(`✓ ${states.length - failed}`);
+  if (failed) {
+    const bad = document.createElement("span");
+    bad.className = "bad";
+    bad.textContent = ` ${failed} failed`;
+    el.append(" ", bad);
+  }
+}
+const tabCountEls = {};
+let groupCountEls = [];
+let pollProgress = null;   // { done, total, t } while a poll's register pass runs
+
+// Refreshes every pass/fail count on the page: tabs, group headings and the section summary.
+function updateCounts() {
+  for (const tab of POLLED_TABS) if (tabCountEls[tab]) countsText(tabCountEls[tab], tab, apiItems(tab));
+  for (const g of groupCountEls) countsText(g.el, g.tab, g.items);
+  const all = POLLED_TABS.flatMap(tab => polledItems(tab).map(i => itemOk(tab, i)));
+  const read = all.filter(x => x !== null), failed = read.filter(x => !x).length;
+  if (!read.length) return;
+  document.getElementById("api-note").textContent =
+    `${all.length} readings: ${read.length - failed} passed, ${failed} failed` +
+    (pollProgress ? ` · polling ${pollProgress.done}/${pollProgress.total}...` : "");
+}
 
 function hexAddr(tab, item) {
   if (item.sbs != null) return `0x${item.sbs.toString(16).padStart(2, "0").toUpperCase()} (block)`;
@@ -781,16 +877,20 @@ function confirmRun(label, item) {
 }
 
 // Reads items in batches small enough for one reply line, storing each result.
-async function readItems(tab, names) {
-  const cmd = readCmd(tab);
-  for (let i = 0; i < names.length; i += 10) {
-    const batch = names.slice(i, i + 10);
+// Reads `names` in batches of 10 (functions one at a time); returns [{ tab, name, ok, why }] for
+// each. `onBatch` runs after every reply so the counts on the page move as the poll goes.
+async function readItems(tab, names, onBatch) {
+  const cmd = readCmd(tab), size = tab === "helpers" ? 1 : 10;
+  const results = [];
+  for (let i = 0; i < names.length; i += size) {
+    const batch = names.slice(i, i + size);
     const r = await sendCommand(`${cmd} ${batch.join(" ")}`);
     const t = Date.now() / 1000;
     for (const name of batch) {
       const key = `${tab}:${name}`;
       if (r.ok && r.values[name] != null) {
         apiState[key] = { raw: r.values[name], t };
+        results.push({ tab, name, ok: true });
         continue;
       }
       // Keep the last good bytes and note the failure, rather than blanking the row.
@@ -801,113 +901,137 @@ async function readItems(tab, names) {
         failed: r.ok,
         failedAt: t,
       };
+      results.push({ tab, name, ok: false, why: r.ok ? "refused by the gauge" : r.error });
     }
+    for (const name of batch) {
+      const v = valueSlots.get(`${tab}:${name}`);
+      if (v) renderApiValue(v.tab, v.item, v.slot);
+    }
+    onBatch?.(results.slice(-batch.length));
   }
+  return results;
 }
 
 function renderApiRows() {
   const body = document.getElementById("api-rows");
   body.replaceChildren();
-  const tab = apiTab, items = apiItems(tab), q = document.getElementById("api-filter").value.trim().toLowerCase();
+  valueSlots.clear();
+  const tab = apiTab, q = document.getElementById("api-filter").value.trim().toLowerCase();
   document.getElementById("api-tab-note").textContent = TABS.find(t => t.key === tab).note;
-  for (const item of items) {
+  groupCountEls = [];
+  const matches = item => {
     const addr = tab === "helpers" ? "" : hexAddr(tab, item);
-    if (q && !`${item.name} ${addr} ${item.doc}`.toLowerCase().includes(q)) continue;
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td><div class="name"></div><div class="doc"></div></td><td class="meta"></td><td></td><td><div class="actions"></div></td>`;
-    tr.querySelector(".name").textContent = item.name;
-    tr.querySelector(".doc").textContent = item.doc;
-    tr.cells[1].textContent = tab === "helpers" ? "" : `${addr}\n`;
-    if (tab !== "helpers" && tab !== "actions") {
-      tr.cells[1].append(`${item.size} B · ${item.access}`);
-      tr.cells[1].style.whiteSpace = "pre-line";
-    }
-    const valueCell = tr.cells[2], actions = tr.querySelector(".actions");
-    const button = (label, onClick, danger) => {
-      const b = document.createElement("button");
-      b.className = danger ? "toggle danger" : "toggle";
-      b.textContent = label;
-      b.addEventListener("click", async () => {
-        b.disabled = true;
-        try { await onClick(); } finally { b.disabled = false; }
-      });
-      actions.appendChild(b);
-      return b;
-    };
+    return !q || `${item.name} ${addr} ${item.doc}`.toLowerCase().includes(q);
+  };
+  for (const [title, groupItems] of groupedItems(tab)) {
+    const shown = groupItems.filter(matches);
+    if (!shown.length) continue;
+    const head = document.createElement("tr");
+    head.className = "group-head";
+    head.innerHTML = '<th colspan="4"><span class="title"></span><span class="counts"></span></th>';
+    head.querySelector(".title").textContent = title;
+    groupCountEls.push({ tab, items: groupItems, el: head.querySelector(".counts") });
+    body.appendChild(head);
+    for (const item of shown) {
+      const addr = tab === "helpers" ? "" : hexAddr(tab, item);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td><div class="name"></div><div class="doc"></div></td><td class="meta"></td><td></td><td><div class="actions"></div></td>`;
+      tr.querySelector(".name").textContent = item.name;
+      tr.querySelector(".doc").textContent = item.doc;
+      tr.cells[1].textContent = tab === "helpers" ? "" : `${addr}\n`;
+      if (tab !== "helpers" && tab !== "actions") {
+        tr.cells[1].append(`${item.size} B · ${item.access}`);
+        tr.cells[1].style.whiteSpace = "pre-line";
+      }
+      const valueCell = tr.cells[2], actions = tr.querySelector(".actions");
+      const button = (label, onClick, danger) => {
+        const b = document.createElement("button");
+        b.className = danger ? "toggle danger" : "toggle";
+        b.textContent = label;
+        b.addEventListener("click", async () => {
+          b.disabled = true;
+          try { await onClick(); } finally { b.disabled = false; }
+        });
+        actions.appendChild(b);
+        return b;
+      };
 
-    if (readable(tab, item)) {
-      renderApiValue(tab, item, valueCell);
-      button("Read", async () => { await readItems(tab, [item.name]); renderApiValue(tab, item, valueCell); });
-      const label = document.createElement("label");
-      label.innerHTML = '<input type="checkbox"> Watch';
-      const box = label.querySelector("input");
-      box.checked = watched.has(`${tab}:${item.name}`);
-      box.addEventListener("change", () => {
-        box.checked ? watched.add(`${tab}:${item.name}`) : watched.delete(`${tab}:${item.name}`);
-      });
-      actions.appendChild(label);
-    } else if (tab === "reads") {
-      valueCell.innerHTML = '<div class="doc">Not polled: reading it switches the gauge into calibration output mode.</div>';
-      button("Read", async () => {
-        if (!confirm(`${item.name} puts the gauge into calibration output mode. Read it anyway?`)) return;
-        await readItems(tab, [item.name]);
-        renderApiValue(tab, item, valueCell);
-      }, true);
-    }
+      const slot = document.createElement("div");
+      valueCell.appendChild(slot);
+      if (readable(tab, item)) {
+        valueSlots.set(`${tab}:${item.name}`, { tab, item, slot });
+        renderApiValue(tab, item, slot);
+        button("Read", async () => { await readItems(tab, [item.name]); renderApiValue(tab, item, slot); });
+      } else if (tab === "reads" && item.name in SIGNATURE_MACS) {
+        slot.innerHTML = `<div class="doc">Not polled: reading a signature makes the gauge compute it, and it NACKs
+          reads for 0.5-1 s while it does. Use ${SIGNATURE_MACS[item.name]} on the Functions tab, which waits.</div>`;
+        button("Read", async () => { await readItems(tab, [item.name]); renderApiValue(tab, item, slot); });
+      } else if (tab === "reads") {
+        slot.innerHTML = '<div class="doc">Not polled: reading it switches the gauge into calibration output mode.</div>';
+        button("Read", async () => {
+          if (!confirm(`${item.name} puts the gauge into calibration output mode. Read it anyway?`)) return;
+          await readItems(tab, [item.name]);
+          renderApiValue(tab, item, slot);
+        }, true);
+      }
 
-    if ((tab === "registers" || tab === "buffers") && item.access !== "RO") {
-      const input = document.createElement("input");
-      input.className = "arg";
-      input.placeholder = tab === "registers" ? `${item.size} bytes hex, little-endian` : "hex bytes";
-      input.setAttribute("aria-label", `Value to write to ${item.name}`);
-      valueCell.appendChild(input);
-      button("Write", async () => {
-        const hex = input.value.trim().replace(/^0x/, "").replace(/\s+/g, "");
-        if (!hex) { input.focus(); return; }
-        if (!confirm(`Write ${hex} to ${item.name}?`)) return;
-        const r = await sendCommand(`${tab === "registers" ? "regw" : "bufw"} ${item.name} ${hex}`);
-        if (r.ok) await readItems(tab, [item.name]);
-        else apiState[`${tab}:${item.name}`] = { error: r.error };
-        renderApiValue(tab, item, valueCell);
-        valueCell.appendChild(input);
-      }, true);
-    }
-
-    if (tab === "actions") {
-      const out = document.createElement("div");
-      out.className = "raw";
-      valueCell.appendChild(out);
-      button("Run", async () => {
-        if (!confirmRun(item.name, item)) return;
-        const r = await sendCommand(`run ${item.name}`);
-        out.className = r.ok ? "raw" : "raw error";
-        out.textContent = r.ok ? `ok (${clock(Date.now() / 1000)})` : r.error;
-      }, item.disruptive);
-    }
-
-    if (tab === "helpers") {
-      const inputs = item.args.map(a => {
+      if ((tab === "registers" || tab === "buffers") && item.access !== "RO") {
         const input = document.createElement("input");
         input.className = "arg";
-        input.placeholder = a;
-        input.setAttribute("aria-label", a);
+        input.placeholder = tab === "registers" ? `${item.size} bytes hex, little-endian` : "hex bytes";
+        input.setAttribute("aria-label", `Value to write to ${item.name}`);
         valueCell.appendChild(input);
-        return input;
-      });
-      const out = document.createElement("div");
-      out.className = "raw";
-      valueCell.prepend(out);
-      button("Call", async () => {
-        const args = inputs.map(i => i.value.trim());
-        if (args.some(a => !a)) { inputs[args.findIndex(a => !a)].focus(); return; }
-        if (item.disruptive && !confirmRun(item.name, { ...item, disruptive: item.name === "seal_fg" })) return;
-        const r = await sendCommand(`call ${item.name} ${args.join(" ")}`.trim());
-        out.className = r.ok ? "raw" : "raw error";
-        out.textContent = r.ok ? (r.values[item.name] ?? "ok") : r.error;
-      }, item.disruptive);
+        button("Write", async () => {
+          const hex = input.value.trim().replace(/^0x/, "").replace(/\s+/g, "");
+          if (!hex) { input.focus(); return; }
+          if (!confirm(`Write ${hex} to ${item.name}?`)) return;
+          const r = await sendCommand(`${tab === "registers" ? "regw" : "bufw"} ${item.name} ${hex}`);
+          if (r.ok) await readItems(tab, [item.name]);
+          else apiState[`${tab}:${item.name}`] = { error: r.error };
+          renderApiValue(tab, item, slot);
+        }, true);
+      }
+
+      if (tab === "actions") {
+        const out = document.createElement("div");
+        out.className = "raw";
+        valueCell.appendChild(out);
+        button("Run", async () => {
+          if (!confirmRun(item.name, item)) return;
+          const r = await sendCommand(`run ${item.name}`);
+          out.className = r.ok ? "raw" : "raw error";
+          out.textContent = r.ok ? `ok (${clock(Date.now() / 1000)})` : r.error;
+        }, item.disruptive);
+      }
+
+      if (tab === "helpers" && SLOW_HELPERS.has(item.name)) {
+        slot.innerHTML = '<div class="doc">Not polled: the gauge needs 0.5-1 s to compute it. Use Call.</div>';
+      }
+      if (tab === "helpers" && !readable(tab, item)) {
+        const inputs = item.args.map(a => {
+          const input = document.createElement("input");
+          input.className = "arg";
+          input.placeholder = a;
+          input.setAttribute("aria-label", a);
+          valueCell.appendChild(input);
+          return input;
+        });
+        const out = document.createElement("div");
+        out.className = "raw";
+        valueCell.prepend(out);
+        button("Call", async () => {
+          const args = inputs.map(i => i.value.trim());
+          if (args.some(a => !a)) { inputs[args.findIndex(a => !a)].focus(); return; }
+          if (item.disruptive && !confirmRun(item.name, { ...item, disruptive: item.name === "seal_fg" })) return;
+          const r = await sendCommand(`call ${item.name} ${args.join(" ")}`.trim());
+          out.className = r.ok ? "raw" : "raw error";
+          out.textContent = r.ok ? (r.values[item.name] ?? "ok") : r.error;
+        }, item.disruptive);
+      }
+      body.appendChild(tr);
     }
-    body.appendChild(tr);
   }
+  updateCounts();
 }
 
 function buildApi() {
@@ -917,6 +1041,11 @@ function buildApi() {
     b.className = "toggle";
     b.setAttribute("role", "tab");
     b.textContent = `${t.label} (${apiItems(t.key).length})`;
+    if (POLLED_TABS.includes(t.key)) {
+      tabCountEls[t.key] = document.createElement("span");
+      tabCountEls[t.key].className = "counts";
+      b.appendChild(tabCountEls[t.key]);
+    }
     b.setAttribute("aria-selected", t.key === apiTab);
     b.addEventListener("click", () => {
       apiTab = t.key;
@@ -929,36 +1058,63 @@ function buildApi() {
 }
 
 document.getElementById("api-filter").addEventListener("input", renderApiRows);
-document.getElementById("read-all").addEventListener("click", async e => {
-  e.target.disabled = true;
-  const started = performance.now();
+// Every readable register, MAC read and buffer rides along with each poll.
+async function pollRegisters(onBatch) {
+  const results = [];
+  pollProgress = { done: 0, total: POLLED_TABS.reduce((n, tab) => n + polledItems(tab).length, 0) };
   try {
-    for (const tab of ["registers", "reads", "buffers"]) {
-      await readItems(tab, apiItems(tab).filter(i => readable(tab, i)).map(i => i.name));
+    for (const tab of POLLED_TABS) {
+      results.push(...await readItems(tab, polledItems(tab).map(i => i.name), batch => {
+        pollProgress.done += batch.length;
+        updateCounts();
+        onBatch?.(batch);
+      }));
     }
   } finally {
-    e.target.disabled = false;
+    pollProgress = null;
+    updateCounts();
   }
-  const states = Object.values(apiState);
-  document.getElementById("api-note").textContent =
-    `Read ${states.length} items in ${Math.round(performance.now() - started)} ms · ` +
-    `${states.filter(s => s.failed).length} refused, ${states.filter(s => s.error).length} errors`;
-  renderApiRows();
-});
-
-// Watched items ride along with each poll.
-async function pollWatched() {
-  if (!watched.size) return;
-  for (const tab of ["registers", "reads", "buffers"]) {
-    const names = [...watched].filter(k => k.startsWith(`${tab}:`)).map(k => k.slice(tab.length + 1));
-    if (names.length) await readItems(tab, names);
-  }
-  if (apiItems(apiTab).some(i => watched.has(`${apiTab}:${i.name}`))) renderApiRows();
+  return results;
 }
 
+const TAB_LABEL = { registers: "register", reads: "MAC read", buffers: "buffer", helpers: "function", gauge: "gauge data" };
+let shownFailures = "", dismissedFailures = "";
+
+// Pops up the reads that failed this poll. Dismissing it hides that set of failures until it changes.
+function reportFailures(failed) {
+  const popup = document.getElementById("read-fail");
+  const key = failed.map(f => `${f.tab}:${f.name}`).join(" ");
+  if (!failed.length) {
+    popup.hidden = true;
+    shownFailures = dismissedFailures = "";
+    return;
+  }
+  if (key === dismissedFailures) return;
+  document.getElementById("read-fail-title").textContent =
+    `${failed.length} reading${failed.length === 1 ? "" : "s"} failed at ${clock(Date.now() / 1000)}`;
+  if (key !== shownFailures) {
+    document.getElementById("read-fail-list").innerHTML = "";
+    for (const f of failed) {
+      const li = document.createElement("li");
+      li.textContent = `${f.name} `;
+      const why = document.createElement("span");
+      why.textContent = `(${TAB_LABEL[f.tab]}: ${f.why})`;
+      li.appendChild(why);
+      document.getElementById("read-fail-list").appendChild(li);
+    }
+    shownFailures = key;
+  }
+  popup.hidden = false;
+}
+document.getElementById("read-fail-close").addEventListener("click", () => {
+  dismissedFailures = shownFailures;
+  document.getElementById("read-fail").hidden = true;
+});
+
 fetch("/api/driver").then(r => r.json()).then(meta => { api = meta; buildApi(); });
-const POLL_MS = 1000;
-let paused = false;
+let pollMs = 1000;
+let pollTimer = null;
+const pollLabel = () => pollMs === 1000 ? "every second" : `every ${pollMs / 1000} s`;
 
 async function sendCommand(cmd) {
   const res = await fetch("/api/command", {
@@ -970,6 +1126,7 @@ async function sendCommand(cmd) {
 }
 
 let lastGoodPoll = null;
+let lastPollOk = false;
 
 // Shown while polls fail; the values on the page stay at the last good reading.
 function showProblem(title, detail) {
@@ -987,58 +1144,91 @@ function clearProblem() {
   document.body.classList.remove("stale");
 }
 
-// The page drives the board: one command per second, the next one scheduled only after the
-// previous reply so slow replies never pile up.
-async function poll() {
-  const started = performance.now();
-  if (!paused) {
-    try {
-      const r = await sendCommand(POLL_CMD);
-      if (r.ok) {
-        const v = r.values, t = Date.now() / 1000;
-        lastGoodPoll = t;
-        clearProblem();
-        renderAllData(v, t);
-        // Chart only complete readings; a refused field would leave a gap in the history.
-        if ([v.temp, v.voltage, v.current, v.soc].every(x => x != null)) {
-          data.push({
-            t,
-            temp: parseFloat(v.temp),
-            volts: parseFloat(v.voltage) / 1000,
-            amps: parseFloat(v.current) / 1000,
-            soc: parseFloat(v.soc),
-            cells: v.cells ? v.cells.slice(0, -2).split("/").map(c => c / 1000) : [],
-          });
-          const cutoff = t - MAX_HISTORY_S;
-          while (data.length && data[0].t < cutoff) data.shift();
-        }
-        renderAll();
-        await pollWatched();
-        setStatus(`${mode === "demo" ? "Simulated board" : "Live"} — polling every second, last reply ${r.ms} ms` +
-          (watched.size ? `, plus ${watched.size} watched` : ""), "live");
-      } else if (r.connected && /NoAcknowledge/.test(r.error)) {
-        showProblem("The gauge is not responding: it NACKs every request.", r.error);
-        setStatus("Gauge not responding — retrying every second", "warn");
-      } else if (r.connected) {
-        showProblem("The gauge returned an error.", r.error);
-        setStatus(`Gauge error: ${r.error}`, "warn");
-      } else {
-        showProblem("The Pico 2 is not connected.", r.error);
-        setStatus(r.error, "warn");
-      }
-    } catch {
-      showProblem("Lost connection to the dashboard server.", "is tools/web_dashboard.py still running?");
-      setStatus("Lost connection to the dashboard server — retrying...", "warn");
-    }
+// The page drives the board: one command per poll interval, the next one scheduled only after
+// the previous reply so slow replies never pile up.
+// The "All gauge data" fields, 10 per `get` like the driver reads, so the count moves from the start.
+// Returns the first failed reply, or one reply holding every field's value.
+async function readGauge(onBatch) {
+  const values = {};
+  let reply = null;
+  for (let i = 0; i < ALL_FIELDS.length; i += 10) {
+    const batch = ALL_FIELDS.slice(i, i + 10);
+    reply = await sendCommand(`get ${batch.join(" ")}`);
+    if (!reply.ok) return reply;
+    Object.assign(values, reply.values);
+    onBatch(batch.filter(n => reply.values[n] !== undefined)
+      .map(n => ({ tab: "gauge", name: n, ok: reply.values[n] !== null, why: "refused by the gauge" })));
   }
-  setTimeout(poll, Math.max(0, POLL_MS - (performance.now() - started)));
+  return { ...reply, values };
 }
 
-document.getElementById("toggle-poll").addEventListener("click", e => {
-  paused = !paused;
-  e.target.textContent = paused ? "Resume polling" : "Pause polling";
-  e.target.setAttribute("aria-pressed", paused);
-  if (paused) setStatus("Polling paused", "");
+// Readings counted so far this poll; the status line counts up as each reply comes back.
+function showTally(tally) {
+  setStatus(`${mode === "demo" ? "Simulated board" : "Live"} — polling ${pollLabel()} · ${tally.results.length} readings: ` +
+    `${tally.passed} passed, ${tally.results.length - tally.passed} failed`,
+    tally.passed < tally.results.length ? "warn" : "live");
+}
+
+async function poll() {
+  pollTimer = null;
+  const started = performance.now();
+  const tally = { results: [], passed: 0 };
+  const count = batch => {
+    tally.results.push(...batch);
+    tally.passed += batch.filter(x => x.ok).length;
+    showTally(tally);
+  };
+  // Restart the count at 0, unless the last poll failed and the status line is showing why.
+  if (lastPollOk) showTally(tally);
+  lastPollOk = false;
+  try {
+    const r = await readGauge(count);
+    if (r.ok) {
+      lastPollOk = true;
+      const v = r.values, t = Date.now() / 1000;
+      lastGoodPoll = t;
+      clearProblem();
+      renderAllData(v, t);
+      // Chart only complete readings; a refused field would leave a gap in the history.
+      if ([v.temp, v.voltage, v.current, v.soc].every(x => x != null)) {
+        data.push({
+          t,
+          temp: parseFloat(v.temp),
+          volts: parseFloat(v.voltage) / 1000,
+          amps: parseFloat(v.current) / 1000,
+          soc: parseFloat(v.soc),
+          cells: v.cells ? v.cells.slice(0, -2).split("/").map(c => c / 1000) : [],
+        });
+        const cutoff = t - MAX_HISTORY_S;
+        while (data.length && data[0].t < cutoff) data.shift();
+      }
+      renderAll();
+      if (api) await pollRegisters(count);
+      reportFailures(tally.results.filter(x => !x.ok));
+    } else if (r.connected && /NoAcknowledge/.test(r.error)) {
+      showProblem("The gauge is not responding: it NACKs every request.", r.error);
+      setStatus(`Gauge not responding — retrying ${pollLabel()}`, "warn");
+    } else if (r.connected) {
+      showProblem("The gauge returned an error.", r.error);
+      setStatus(`Gauge error: ${r.error}`, "warn");
+    } else {
+      showProblem("The Pico 2 is not connected.", r.error);
+      setStatus(r.error, "warn");
+    }
+  } catch {
+    showProblem("Lost connection to the dashboard server.", "is tools/web_dashboard.py still running?");
+    setStatus("Lost connection to the dashboard server — retrying...", "warn");
+  }
+  pollTimer = setTimeout(poll, Math.max(0, pollMs - (performance.now() - started)));
+}
+
+// A new interval applies from the next poll; a poll waiting on its timer is rescheduled now.
+document.getElementById("poll-rate").addEventListener("change", e => {
+  pollMs = Number(e.target.value);
+  if (pollTimer !== null) {
+    clearTimeout(pollTimer);
+    pollTimer = setTimeout(poll, pollMs);
+  }
 });
 
 fetch("/api/info").then(r => r.json()).then(info => { mode = info.mode; }).catch(() => {});

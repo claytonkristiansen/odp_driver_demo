@@ -163,14 +163,24 @@ Device `RP2350_M33_0`, SWD, SVD file `rp235x.svd` in this directory.
 ## Live dashboard (for demos)
 
 `tools/web_dashboard.py` serves a web page: live readout tiles, temperature,
-voltage and current charts with a hover crosshair, a cell-balance chart and a table of readings.
-The page drives the board: every second it posts a
+voltage and current charts with a hover crosshair and a table of readings.
+The page drives the board: on each poll it posts a
 `get` for every value it shows to the script, which forwards it to the Pico 2 and returns the
-parsed reply (about 100 ms on real hardware).
+parsed reply (about 100 ms on real hardware). The "Poll every" dropdown in the header sets the
+interval: 1 s (the default), 2 s, 5 s or 10 s.
 
 The Driver API section lists every register, MAC command, buffer and function from the driver,
-decodes raw bytes into the `.ddsl` bit fields, and can read, write, run or call each one. Ticking
-Watch adds an item to the 1-second poll; Read all snapshots everything readable (about 0.6 s).
+decodes raw bytes into the `.ddsl` bit fields, and can read, write, run or call each one. Each tab
+is grouped by what the items hold (measurements, status, lifetime data, ...). Every poll re-reads
+182 values: the 58 "All gauge data" fields plus 124 driver reads (44 registers, 69 MAC reads,
+5 buffers and the 6 lib.rs read functions that take no arguments). Not polled: the two
+calibration-output MAC reads, which switch the gauge into calibration mode; the instruction
+flash, static DF and all-DF signature MAC reads, which make the gauge compute the signature and
+NACK reads for 0.5-1 s while it does; and the three signature functions that wait for it, which
+take 0.5-1 s each. The static chemistry DF signature (`mac_static_chem_df_sig`) reads without a
+wait and is polled. The pass/fail counts on the tabs, group headings and
+section header update as each reply arrives; a popup lists any reading that failed, and dismissing
+it hides it until a different set fails.
 Block registers on the Registers tab carry a warning (see "Driver issues found") pointing to the
 MAC read that returns the same data correctly.
 Writes and actions ask for confirmation, and ones that are hard to undo (seal, shutdown, FET and
