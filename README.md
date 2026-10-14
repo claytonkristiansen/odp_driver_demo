@@ -1,6 +1,6 @@
 # DriverDemo: BQ41Z50 on Raspberry Pi Pico 2
 
-Bridges a BQ41Z50 fuel gauge on SMBus (I2C0, 100 kHz) to a computer over USB serial. The host
+Bridges a BQ41Z50 fuel gauge on SMBus (I2C0, 400 kHz) to a computer over USB serial. The host
 sends text commands and the Pico 2 reads the gauge through the
 [bq41z50 driver](../bq41z50) and replies: the SBS values (temperature, voltage, current, charge,
 capacities, times, status), the BQ41Z50 status registers, and every register, MAC command, buffer

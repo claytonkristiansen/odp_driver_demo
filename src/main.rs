@@ -80,7 +80,7 @@ static GAUGE_ACTIVITY: Signal<CriticalSectionRawMutex, ()> = Signal::new();
 ///
 /// Transactions use embassy-rp's blocking I2C: its async reads longer than the 16-byte FIFO
 /// can wait forever for a batch that never completes (seen with embassy-rp 0.3.1 on SMBus block
-/// reads), which wedges the whole firmware. A 33-byte block read takes ~3 ms at 100 kHz, and the
+/// reads), which wedges the whole firmware. A 33-byte block read takes ~1 ms at 400 kHz, and the
 /// bus yields to the executor after each transaction so USB keeps running.
 struct BlinkingBus {
     bus: i2c::I2c<'static, I2C0, i2c::Blocking>,
@@ -849,10 +849,12 @@ async fn send_line<'d>(serial: &mut CdcAcmClass<'d, usb::Driver<'d, USB>>, mut l
 async fn main(_spawner: Spawner) {
     let p = embassy_rp::init(Default::default());
 
-    // I2C0 on GP5 (SCL) / GP4 (SDA). The default config is 100 kHz, the SMBus maximum.
+    // I2C0 on GP5 (SCL) / GP4 (SDA) at 400 kHz (fast mode).
     // In an Option so `scan` can briefly take the bus back from the driver.
+    let mut i2c_config = i2c::Config::default();
+    i2c_config.frequency = 400_000;
     let mut bq = Some(Bq41z50::new(BlinkingBus {
-        bus: i2c::I2c::new_blocking(p.I2C0, p.PIN_5, p.PIN_4, i2c::Config::default()),
+        bus: i2c::I2c::new_blocking(p.I2C0, p.PIN_5, p.PIN_4, i2c_config),
     }));
     // Onboard LED is GP25 on the non-wireless Pico 2.
     let mut led = Output::new(p.PIN_25, Level::Low);
